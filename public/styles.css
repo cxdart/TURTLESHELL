@@ -14046,3 +14046,132 @@ html[dir="rtl"] #genos-details .about-text li {
     align-items: flex-start !important;
   }
 }
+
+/* ============================================================================
+   DESKTOP NAV SURFACE UNIFICATION
+   Keep mobile unchanged; collapse desktop pills into one connected shell.
+   ============================================================================ */
+@media (min-width: 769px) {
+  .nav-inner {
+    box-sizing: border-box;
+    gap: 6px;
+    padding: 6px 10px;
+    background:
+      linear-gradient(180deg, rgba(26, 28, 34, 0.66), rgba(16, 18, 24, 0.56)),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 14px;
+    box-shadow:
+      0 16px 42px rgba(2, 7, 18, 0.28),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    backdrop-filter: saturate(188%) blur(24px);
+    -webkit-backdrop-filter: saturate(188%) blur(24px);
+    transition:
+      opacity 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.52s ease,
+      border-color 0.52s ease,
+      box-shadow 0.52s ease,
+      backdrop-filter 0.52s ease,
+      -webkit-backdrop-filter 0.52s ease;
+  }
+
+  [data-theme="light"] .nav-inner {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(244, 246, 250, 0.84)),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.1));
+    border-color: rgba(17, 24, 39, 0.16);
+    box-shadow:
+      0 14px 34px rgba(15, 23, 42, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.54),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    backdrop-filter: saturate(170%) blur(22px);
+    -webkit-backdrop-filter: saturate(170%) blur(22px);
+  }
+
+  .nav.nav--dimmed .nav-inner {
+    opacity: 0.76;
+    background: color-mix(in srgb, var(--glass) 90%, transparent);
+    border-color: color-mix(in srgb, var(--border) 82%, transparent);
+    box-shadow:
+      0 12px 26px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: saturate(152%) blur(16px);
+    -webkit-backdrop-filter: saturate(152%) blur(16px);
+  }
+
+  [data-theme="light"] .nav.nav--dimmed .nav-inner {
+    opacity: 0.82;
+    background: rgba(248, 251, 255, 0.84);
+    border-color: rgba(15, 23, 42, 0.13);
+    box-shadow:
+      0 12px 28px rgba(15, 23, 42, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.84);
+    backdrop-filter: saturate(132%) blur(14px);
+    -webkit-backdrop-filter: saturate(132%) blur(14px);
+  }
+
+  .nav.nav--top-focus .nav-inner {
+    opacity: 1;
+    background:
+      linear-gradient(180deg, rgba(26, 28, 34, 0.66), rgba(16, 18, 24, 0.56)),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow:
+      0 16px 42px rgba(2, 7, 18, 0.28),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    backdrop-filter: saturate(188%) blur(24px);
+    -webkit-backdrop-filter: saturate(188%) blur(24px);
+  }
+
+  [data-theme="light"] .nav.nav--top-focus .nav-inner {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(244, 246, 250, 0.84)),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.1));
+    border-color: rgba(17, 24, 39, 0.16);
+    box-shadow:
+      0 14px 34px rgba(15, 23, 42, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.54),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    backdrop-filter: saturate(170%) blur(22px);
+    -webkit-backdrop-filter: saturate(170%) blur(22px);
+  }
+
+  .nav .nav-logo-box,
+  .nav .nav-links-box,
+  .nav .nav-controls-box,
+  .nav:not(.nav--dimmed) .nav-logo-box,
+  .nav:not(.nav--dimmed) .nav-links-box,
+  .nav:not(.nav--dimmed) .nav-controls-box,
+  .nav.nav--dimmed .nav-logo-box,
+  .nav.nav--dimmed .nav-links-box,
+  .nav.nav--dimmed .nav-controls-box,
+  .nav.nav--top-focus .nav-logo-box,
+  .nav.nav--top-focus .nav-links-box,
+  [data-theme="light"] .nav .nav-logo-box,
+  [data-theme="light"] .nav .nav-links-box,
+  [data-theme="light"] .nav .nav-controls-box,
+  [data-theme="light"] .nav:not(.nav--dimmed) .nav-logo-box,
+  [data-theme="light"] .nav:not(.nav--dimmed) .nav-links-box,
+  [data-theme="light"] .nav:not(.nav--dimmed) .nav-controls-box,
+  [data-theme="light"] .nav.nav--dimmed .nav-logo-box,
+  [data-theme="light"] .nav.nav--dimmed .nav-links-box,
+  [data-theme="light"] .nav.nav--dimmed .nav-controls-box,
+  [data-theme="light"] .nav.nav--top-focus .nav-logo-box,
+  [data-theme="light"] .nav.nav--top-focus .nav-links-box {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .nav-logo-box,
+  .nav-links-box,
+  .nav-controls-box {
+    border-radius: 12px;
+  }
+}
