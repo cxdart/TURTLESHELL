@@ -77,6 +77,7 @@ export default function NavbarClient({ user, name }: NavbarClientProps) {
   const navTopFocusRef = useRef(false)
   const overlayOpenRef = useRef(false)
   const bodyScrollYRef = useRef(0)
+  const bodyScrollLockedRef = useRef(false)
   const skipBodyScrollRestoreRef = useRef(false)
   const closeTimerRef = useRef<number | null>(null)
   const lastScrollYRef = useRef(0)
@@ -131,6 +132,50 @@ export default function NavbarClient({ user, name }: NavbarClientProps) {
       window.clearTimeout(closeTimerRef.current)
       closeTimerRef.current = null
     }
+  }, [])
+
+  const lockBodyScroll = useCallback(() => {
+    if (bodyScrollLockedRef.current) return
+
+    bodyScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    document.body.classList.add('mobile-nav-open')
+    document.documentElement.classList.add('mobile-nav-open')
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${bodyScrollYRef.current}px`
+    document.body.style.left = '0'
+    document.body.style.right = '0'
+    document.body.style.width = '100%'
+    document.body.style.overflow = 'hidden'
+    bodyScrollLockedRef.current = true
+  }, [])
+
+  const unlockBodyScroll = useCallback((restoreScroll: boolean) => {
+    if (
+      !bodyScrollLockedRef.current &&
+      !document.body.classList.contains('mobile-nav-open') &&
+      !document.documentElement.classList.contains('mobile-nav-open')
+    ) {
+      skipBodyScrollRestoreRef.current = false
+      return
+    }
+
+    const restoreY = bodyScrollYRef.current
+
+    document.body.classList.remove('mobile-nav-open')
+    document.documentElement.classList.remove('mobile-nav-open')
+    document.body.style.position = ''
+    document.body.style.top = ''
+    document.body.style.left = ''
+    document.body.style.right = ''
+    document.body.style.width = ''
+    document.body.style.overflow = ''
+    bodyScrollLockedRef.current = false
+
+    if (restoreScroll) {
+      window.scrollTo({ left: 0, top: restoreY, behavior: 'auto' })
+    }
+
+    skipBodyScrollRestoreRef.current = false
   }, [])
 
   const setNavDimmedState = useCallback((next: boolean) => {
@@ -258,40 +303,15 @@ export default function NavbarClient({ user, name }: NavbarClientProps) {
   }, [MOBILE_NAV_ANIM_MS, clearCloseTimer, mobileVisible])
 
   useEffect(() => {
-    if (!mobileOpen) {
-      document.body.classList.remove('mobile-nav-open')
-      document.documentElement.classList.remove('mobile-nav-open')
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.left = ''
-      document.body.style.right = ''
-      document.body.style.overflow = ''
+    if (mobileOpen) {
+      lockBodyScroll()
       return
     }
 
-    bodyScrollYRef.current = window.scrollY || window.pageYOffset || 0
-    document.body.classList.add('mobile-nav-open')
-    document.documentElement.classList.add('mobile-nav-open')
-    document.body.style.position = 'fixed'
-    document.body.style.top = `-${bodyScrollYRef.current}px`
-    document.body.style.left = '0'
-    document.body.style.right = '0'
-    document.body.style.overflow = 'hidden'
+    unlockBodyScroll(!skipBodyScrollRestoreRef.current)
+  }, [lockBodyScroll, mobileOpen, unlockBodyScroll])
 
-    return () => {
-      document.body.classList.remove('mobile-nav-open')
-      document.documentElement.classList.remove('mobile-nav-open')
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.left = ''
-      document.body.style.right = ''
-      document.body.style.overflow = ''
-      if (!skipBodyScrollRestoreRef.current) {
-        window.scrollTo(0, bodyScrollYRef.current)
-      }
-      skipBodyScrollRestoreRef.current = false
-    }
-  }, [mobileOpen])
+  useEffect(() => () => unlockBodyScroll(false), [unlockBodyScroll])
 
   useEffect(() => {
     const onScroll = () => {
@@ -374,11 +394,13 @@ export default function NavbarClient({ user, name }: NavbarClientProps) {
     const immediate = typeof immediateOrEvent === 'boolean' ? immediateOrEvent : false
     setLangOpen(false)
     setUserOpen(false)
+    if (mobileOpen) {
+      setMobileOpen(false)
+    }
     if (immediate) {
       clearCloseTimer()
       setMobileClosing(false)
       setMobileVisible(false)
-      setMobileOpen(false)
       return
     }
     if (!mobileVisible || mobileClosing) return
@@ -388,7 +410,6 @@ export default function NavbarClient({ user, name }: NavbarClientProps) {
       closeTimerRef.current = null
       setMobileClosing(false)
       setMobileVisible(false)
-      setMobileOpen(false)
     }, MOBILE_NAV_ANIM_MS)
   }
 

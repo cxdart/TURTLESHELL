@@ -1181,10 +1181,33 @@ async function handleContactSubmit(e) {
     document.getElementById('contactWaSuccessLink')?.setAttribute('href', waHref);
     document.getElementById('waFloater')?.setAttribute('href', `https://wa.me/${waNumber}`);
 
+    const showContactSuccessStep = () => {
+        const step1 = document.getElementById('contactStep1');
+        const step2 = document.getElementById('contactStep2');
+        const modalCard = document.querySelector('#contactModal .modal');
+
+        if (step1) step1.style.display = 'none';
+        if (step2) step2.style.display = '';
+
+        requestAnimationFrame(() => {
+            if (modalCard && typeof modalCard.scrollTo === 'function') {
+                modalCard.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            } else if (modalCard) {
+                modalCard.scrollTop = 0;
+            }
+
+            const successAction = document.getElementById('contactWaSuccessLink');
+            try {
+                successAction?.focus({ preventScroll: true });
+            } catch {
+                successAction?.focus();
+            }
+        });
+    };
+
     // No endpoint yet — show success step
     if (!CONTACT_ENDPOINT) {
-        document.getElementById('contactStep1').style.display = 'none';
-        document.getElementById('contactStep2').style.display = '';
+        showContactSuccessStep();
         return;
     }
 
@@ -1206,8 +1229,7 @@ async function handleContactSubmit(e) {
             return;
         }
         if (res.ok) {
-            document.getElementById('contactStep1').style.display = 'none';
-            document.getElementById('contactStep2').style.display = '';
+            showContactSuccessStep();
         } else {
             throw new Error(`${res.status}`);
         }

@@ -15247,6 +15247,7 @@ html[dir="rtl"] #genos-details .about-text li {
   max-width: 960px;
   min-height: clamp(420px, 58vh, 560px);
   margin: 0 auto;
+  scroll-margin-top: calc(var(--nav-height) + 18px);
   padding: clamp(32px, 5vw, 52px);
   border-radius: 30px;
   border: 1px solid var(--contact-success-border);

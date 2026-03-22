@@ -1,7 +1,5 @@
 ﻿'use client'
 
-import { useRouter } from 'next/navigation'
-
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useRuntimeLanguage } from '@/lib/use-runtime-language'
 import { createClient } from '@/lib/supabase/client'
@@ -186,6 +184,7 @@ export default function ContactPage() {
     const isRTL = lang === 'ar'
     const supabase = useMemo(() => createClient(), [])
     const copyResetTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const successCardRef = useRef<HTMLDivElement | null>(null)
 
     const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle')
     const [selectedService, setSelectedService] = useState<ServiceKey>('Other')
@@ -216,6 +215,19 @@ export default function ContactPage() {
             clearTimeout(copyResetTimer.current)
         }
     }, [])
+
+    useEffect(() => {
+        if (status !== 'success') return
+
+        const scrollTimer = window.setTimeout(() => {
+            successCardRef.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            })
+        }, 60)
+
+        return () => window.clearTimeout(scrollTimer)
+    }, [status])
 
     const handleCopyEmail = async () => {
         try {
@@ -261,7 +273,7 @@ export default function ContactPage() {
             <main className="service-page contact-page" dir={isRTL ? 'rtl' : 'ltr'}>
                 <section className="section contact-page-section">
                     {status === 'success' ? (
-                        <div className="contact-page-success reveal">
+                        <div className="contact-page-success" ref={successCardRef}>
                             <div className="contact-success-icon" aria-hidden="true">{copy.success_icon}</div>
                             <h2>{copy.success_title}</h2>
                             <p className="modal-subtitle">{copy.success_subtitle}</p>
