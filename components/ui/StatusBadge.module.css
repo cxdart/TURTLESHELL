@@ -1,0 +1,44 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(235, 240, 248, 0.92);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.9;
+}
+
+.active {
+  background: rgba(80, 220, 120, 0.12);
+  border-color: rgba(80, 220, 120, 0.35);
+  color: rgba(194, 255, 213, 0.96);
+}
+
+.locked {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(220, 227, 240, 0.88);
+}
+
+.comingSoon {
+  background: rgba(120, 160, 255, 0.12);
+  border-color: rgba(120, 160, 255, 0.26);
+  color: rgba(203, 221, 255, 0.96);
+}
+
+:global([data-theme='light']) .badge {
+  border-color: rgba(14, 24, 40, 0.15);
+}

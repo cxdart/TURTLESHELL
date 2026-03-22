@@ -1,0 +1,90 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 312px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 24px;
+  transition: transform 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.iconWrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 1.2rem;
+}
+
+.content {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.systemLabel {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(208, 218, 236, 0.72);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.22rem;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.actionWrap {
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.actionButton {
+  width: 100%;
+}
+
+.actionDisabled {
+  cursor: not-allowed;
+}
+
+:global([data-theme='light']) .card {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(16, 24, 40, 0.1);
+}
+
+:global([data-theme='light']) .description,
+:global([data-theme='light']) .systemLabel {
+  color: rgba(55, 67, 87, 0.82);
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-height: 282px;
+    padding: 20px;
+  }
+}

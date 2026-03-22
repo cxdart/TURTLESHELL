@@ -1,0 +1,8 @@
+.next/
+node_modules/
+.env.local
+.env.local.bak
+.env.production
+.env.production.save
+tsconfig.tsbuildinfo
+*.navbak

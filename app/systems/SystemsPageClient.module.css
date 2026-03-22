@@ -1,0 +1,136 @@
+.pageWrap {
+  position: relative;
+  z-index: 1;
+  width: min(1300px, 100%);
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: grid;
+  gap: 28px;
+}
+
+.headerCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.headerCopy {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.badge {
+  width: fit-content;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 160, 255, 0.28);
+  background: rgba(120, 160, 255, 0.11);
+  color: rgba(220, 232, 255, 0.95);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  max-width: 64ch;
+  line-height: 1.6;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 260px;
+}
+
+.metric {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.metricLabel {
+  margin: 0;
+  color: rgba(216, 227, 245, 0.74);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metricValue {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .pageWrap {
+    padding: 24px 16px;
+    gap: 20px;
+  }
+
+  .headerCard {
+    padding: 18px;
+  }
+
+  .headerTop {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .metrics {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    gap: 16px;
+  }
+}
+
+:global([data-theme='light']) .headerCard,
+:global([data-theme='light']) .metric {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 25, 40, 0.12);
+}
+
+:global([data-theme='light']) .subtitle,
+:global([data-theme='light']) .metricLabel {
+  color: rgba(56, 68, 89, 0.86);
+}

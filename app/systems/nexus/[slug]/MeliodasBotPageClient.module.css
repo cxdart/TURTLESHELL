@@ -1,0 +1,597 @@
+.mainPanel {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.header {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--accent);
+}
+
+.backLink:focus-visible {
+  outline: none;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.56rem, 2.4vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statusRunning {
+  border-color: rgba(54, 210, 118, 0.34);
+  color: rgba(223, 255, 236, 0.96);
+}
+
+.statusStopped {
+  color: rgba(235, 237, 242, 0.9);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.statusDotRunning {
+  background: #34d27a;
+  box-shadow: 0 0 10px rgba(52, 210, 122, 0.7);
+}
+
+.statusDotStopped {
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.flash {
+  margin-bottom: 16px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.92rem;
+}
+
+.flashSuccess {
+  border-color: rgba(54, 210, 118, 0.32);
+  background: rgba(54, 210, 118, 0.1);
+  color: #dfffea;
+}
+
+.flashError {
+  border-color: rgba(255, 104, 104, 0.3);
+  background: rgba(255, 104, 104, 0.1);
+  color: #ffd9d9;
+}
+
+.flashInfo {
+  border-color: rgba(41, 151, 255, 0.3);
+  background: rgba(41, 151, 255, 0.1);
+  color: #d9ecff;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  grid-template-areas:
+    'controls log'
+    'accounts log'
+    'settings log';
+  gap: 24px;
+  align-items: stretch;
+}
+
+.controlsArea {
+  grid-area: controls;
+  min-width: 0;
+}
+
+.logArea {
+  grid-area: log;
+  min-width: 0;
+}
+
+.accountsArea {
+  grid-area: accounts;
+  min-width: 0;
+}
+
+.settingsArea {
+  grid-area: settings;
+  min-width: 0;
+}
+
+.accountsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.card {
+  min-width: 0;
+  border-radius: 18px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+}
+
+.botCard {
+  gap: 18px;
+}
+
+.cardHeader {
+  display: grid;
+  gap: 7px;
+}
+
+.cardLabel {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(41, 151, 255, 0.22);
+  background: rgba(41, 151, 255, 0.08);
+  color: #9fd0ff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.24rem;
+  letter-spacing: -0.02em;
+}
+
+.cardText {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.statBox {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+  min-width: 0;
+}
+
+.statLabel {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(223, 223, 228, 0.72);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statValue {
+  display: block;
+  color: rgba(250, 252, 255, 0.96);
+  font-size: 0.92rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.actionRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.actionButton {
+  min-height: 50px;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.startButton {
+  background: rgba(41, 151, 255, 0.16);
+  border-color: rgba(41, 151, 255, 0.34);
+  color: rgba(236, 247, 255, 0.98);
+}
+
+.stopButton {
+  background: rgba(255, 84, 84, 0.14);
+  border-color: rgba(255, 84, 84, 0.36);
+  color: rgba(255, 224, 224, 0.98);
+}
+
+.actionButton:hover:not(:disabled),
+.primaryButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.actionButton:disabled,
+.primaryButton:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.formStack {
+  display: grid;
+  gap: 12px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.field > span {
+  color: rgba(244, 248, 255, 0.94);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(250, 252, 255, 0.96);
+  padding: 0 12px;
+  font: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.input::placeholder {
+  color: rgba(223, 223, 228, 0.52);
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(41, 151, 255, 0.45);
+  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.textarea {
+  min-height: 176px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.primaryButton {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(41, 151, 255, 0.35);
+  background: rgba(41, 151, 255, 0.16);
+  color: #eaf6ff;
+  font: inherit;
+  font-size: 0.94rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.savedButton,
+.savedButton:hover,
+.savedButton:disabled {
+  border-color: rgba(147, 156, 176, 0.3);
+  background: rgba(147, 156, 176, 0.18);
+  color: rgba(226, 231, 241, 0.9);
+  box-shadow: none;
+}
+
+.logCard {
+  height: 100%;
+  min-height: 100%;
+}
+
+.logBox {
+  flex: 1;
+  min-height: 520px;
+  max-height: 100%;
+  overflow-y: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logLine,
+.logEmpty {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.logLine {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(210, 225, 255, 0.88);
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 4px 8px 4px 12px;
+  border-left: 2px solid rgba(41, 151, 255, 0.18);
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  border-radius: 0 6px 6px 0;
+}
+
+.logTs {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: rgba(130, 150, 200, 0.5);
+  letter-spacing: 0.02em;
+  user-select: none;
+  min-width: 58px;
+}
+
+.logText {
+  flex: 1;
+  min-width: 0;
+}
+
+.logLineOk {
+  border-left-color: rgba(52, 210, 122, 0.7);
+  color: rgba(190, 255, 215, 0.9);
+}
+
+.logLineWarn {
+  border-left-color: rgba(255, 190, 50, 0.7);
+  color: rgba(255, 230, 170, 0.9);
+}
+
+.logLineErr {
+  border-left-color: rgba(255, 80, 80, 0.8);
+  color: rgba(255, 190, 190, 0.95);
+  background: rgba(255, 60, 60, 0.07);
+  border-radius: 0 6px 6px 0;
+}
+
+.logDivider {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(100, 130, 180, 0.45);
+  letter-spacing: 0.08em;
+  padding: 6px 0 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 4px 0;
+  user-select: none;
+}
+
+.logEmpty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+[dir='rtl'] .header,
+[dir='rtl'] .card,
+[dir='rtl'] .logLine,
+[dir='rtl'] .logEmpty {
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'controls'
+      'accounts'
+      'settings'
+      'log';
+  }
+
+  .accountsGrid,
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .logBox {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 700px) {
+  .mainPanel {
+    padding: 18px;
+  }
+
+  .headerTop {
+    flex-wrap: wrap;
+  }
+
+  .statusPill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .statGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .actionRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+:global([data-theme='light']) .card {
+  border-color: rgba(12, 20, 34, 0.12);
+  background: rgba(248, 250, 255, 0.96);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.10);
+}
+
+:global([data-theme='light']) .header {
+  color: rgba(20, 28, 48, 0.95);
+}
+
+:global([data-theme='light']) .title {
+  color: rgba(15, 24, 44, 0.98);
+}
+
+:global([data-theme='light']) .backLink,
+:global([data-theme='light']) .subtitle,
+:global([data-theme='light']) .cardText,
+:global([data-theme='light']) .logEmpty,
+:global([data-theme='light']) .statLabel {
+  color: rgba(55, 65, 85, 0.8);
+}
+
+:global([data-theme='light']) .statusPill {
+  border-color: rgba(12, 20, 34, 0.18);
+  background: rgba(248, 250, 255, 0.9);
+  color: rgba(20, 28, 48, 0.9);
+}
+
+:global([data-theme='light']) .statusRunning {
+  border-color: rgba(28, 167, 98, 0.4);
+  color: rgba(14, 85, 48, 0.95);
+}
+
+:global([data-theme='light']) .statBox {
+  border-color: rgba(12, 20, 34, 0.12);
+  background: rgba(240, 245, 255, 0.7);
+}
+
+:global([data-theme='light']) .input {
+  border-color: rgba(12, 20, 34, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  color: rgba(20, 30, 50, 0.95);
+}
+
+:global([data-theme='light']) .input::placeholder {
+  color: rgba(90, 100, 120, 0.6);
+}
+
+:global([data-theme='light']) .field > span,
+:global([data-theme='light']) .statValue,
+:global([data-theme='light']) .cardTitle {
+  color: rgba(15, 24, 44, 0.98);
+}
+
+:global([data-theme='light']) .logBox {
+  border-color: rgba(12, 20, 34, 0.14);
+  background: rgba(230, 236, 249, 0.65);
+}
+
+:global([data-theme='light']) .logLine {
+  border-color: rgba(12, 20, 34, 0.10);
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(20, 30, 50, 0.92);
+}
+
+:global([data-theme='light']) .logEmpty {
+  background: rgba(255, 255, 255, 0.7);
+  color: rgba(60, 70, 90, 0.7);
+}
+
+:global([data-theme='light']) .startButton,
+:global([data-theme='light']) .primaryButton {
+  color: #0f2744;
+}
+
+:global([data-theme='light']) .flashInfo {
+  background: rgba(18, 110, 220, 0.08);
+  border-color: rgba(18, 110, 220, 0.28);
+  color: rgba(14, 60, 140, 0.9);
+}
+
+:global([data-theme='light']) .flashSuccess {
+  background: rgba(28, 167, 98, 0.08);
+  border-color: rgba(28, 167, 98, 0.28);
+  color: rgba(14, 80, 50, 0.92);
+}
+
+:global([data-theme='light']) .flashError {
+  background: rgba(210, 58, 58, 0.08);
+  border-color: rgba(210, 58, 58, 0.28);
+  color: rgba(130, 25, 25, 0.9);
+}
+
+:global([data-theme='light']) .cardLabel {
+  background: rgba(22, 108, 220, 0.08);
+  border-color: rgba(22, 108, 220, 0.22);
+  color: rgba(14, 68, 160, 0.9);
+}

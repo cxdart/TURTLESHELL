@@ -1,0 +1,6 @@
+/* Fonts loaded via next/font in layout.tsx - no @import needed */
+
+:root {
+  --accent-1: 120, 160, 255;
+  --accent-2: 160, 120, 255;
+}
