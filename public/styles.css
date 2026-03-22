@@ -14899,3 +14899,489 @@ html[dir="rtl"] #genos-details .about-text li {
     color: rgba(24, 43, 72, 0.96) !important;
   }
 }
+
+/* ============================================================================
+   CONTACT EXPERIENCE THEME POLISH + STABLE SUCCESS STATES
+============================================================================ */
+.contact-page,
+.contact-modal {
+  --contact-shell-bg:
+    linear-gradient(180deg, rgba(9, 13, 22, 0.96), rgba(5, 8, 15, 0.95)),
+    radial-gradient(circle at top left, rgba(41, 151, 255, 0.12), transparent 56%),
+    radial-gradient(circle at bottom right, rgba(110, 58, 255, 0.08), transparent 58%);
+  --contact-shell-border: rgba(111, 142, 196, 0.2);
+  --contact-shell-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(92, 132, 201, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --contact-panel-bg:
+    linear-gradient(180deg, rgba(14, 18, 30, 0.82), rgba(10, 14, 24, 0.74)),
+    radial-gradient(circle at top, rgba(41, 151, 255, 0.06), transparent 60%);
+  --contact-panel-border: rgba(131, 153, 190, 0.15);
+  --contact-panel-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --contact-input-bg: rgba(13, 17, 28, 0.86);
+  --contact-input-border: rgba(118, 148, 197, 0.16);
+  --contact-input-text: rgba(239, 246, 255, 0.96);
+  --contact-input-placeholder: rgba(152, 171, 198, 0.44);
+  --contact-input-focus-border: rgba(114, 177, 255, 0.42);
+  --contact-input-focus-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  --contact-button-bg:
+    linear-gradient(180deg, rgba(24, 32, 50, 0.84), rgba(14, 19, 34, 0.78)),
+    radial-gradient(circle at 12% 0%, rgba(60, 154, 255, 0.16), transparent 54%),
+    radial-gradient(circle at 88% 100%, rgba(92, 80, 255, 0.18), transparent 56%);
+  --contact-button-border: rgba(114, 177, 255, 0.34);
+  --contact-button-shadow:
+    0 14px 34px rgba(2, 10, 26, 0.34),
+    0 0 0 1px rgba(41, 151, 255, 0.16),
+    inset 0 1px 0 rgba(214, 232, 255, 0.18);
+  --contact-button-text: rgba(243, 248, 255, 0.98);
+  --contact-button-hover-border: rgba(143, 193, 255, 0.5);
+  --contact-button-hover-shadow:
+    0 16px 36px rgba(2, 10, 26, 0.38),
+    0 0 20px rgba(41, 151, 255, 0.16),
+    inset 0 1px 0 rgba(226, 242, 255, 0.24);
+  --contact-copy-bg: rgba(255, 255, 255, 0.04);
+  --contact-copy-border: rgba(255, 255, 255, 0.12);
+  --contact-copy-hover-bg: rgba(255, 255, 255, 0.08);
+  --contact-copy-hover-border: rgba(124, 175, 244, 0.3);
+  --contact-success-bg:
+    linear-gradient(180deg, rgba(9, 13, 22, 0.98), rgba(5, 8, 15, 0.96)),
+    radial-gradient(circle at 50% 0%, rgba(41, 151, 255, 0.16), transparent 54%),
+    radial-gradient(circle at 80% 100%, rgba(37, 211, 102, 0.12), transparent 44%);
+  --contact-success-border: rgba(105, 143, 206, 0.22);
+  --contact-success-shadow:
+    0 26px 62px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(92, 132, 201, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .contact-page,
+[data-theme="light"] .contact-modal {
+  --contact-shell-bg:
+    linear-gradient(180deg, rgba(252, 255, 255, 0.96), rgba(243, 248, 255, 0.94)),
+    radial-gradient(circle at top left, rgba(76, 145, 226, 0.1), transparent 58%),
+    radial-gradient(circle at bottom right, rgba(110, 58, 255, 0.06), transparent 60%);
+  --contact-shell-border: rgba(114, 142, 190, 0.16);
+  --contact-shell-shadow:
+    0 24px 52px rgba(80, 109, 154, 0.14),
+    0 0 0 1px rgba(112, 148, 204, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
+  --contact-panel-bg:
+    linear-gradient(180deg, rgba(248, 251, 255, 0.92), rgba(241, 246, 255, 0.86)),
+    radial-gradient(circle at top, rgba(76, 145, 226, 0.08), transparent 60%);
+  --contact-panel-border: rgba(122, 151, 197, 0.14);
+  --contact-panel-shadow:
+    0 14px 28px rgba(112, 143, 188, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  --contact-input-bg: rgba(247, 250, 255, 0.95);
+  --contact-input-border: rgba(122, 151, 197, 0.16);
+  --contact-input-text: rgba(23, 36, 58, 0.94);
+  --contact-input-placeholder: rgba(95, 114, 143, 0.54);
+  --contact-input-focus-border: rgba(76, 145, 226, 0.34);
+  --contact-input-focus-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  --contact-button-bg:
+    linear-gradient(180deg, rgba(235, 243, 255, 0.94), rgba(218, 233, 255, 0.9)),
+    radial-gradient(circle at 15% 0%, rgba(76, 145, 226, 0.14), transparent 52%),
+    radial-gradient(circle at 88% 100%, rgba(90, 120, 170, 0.08), transparent 56%);
+  --contact-button-border: rgba(93, 138, 212, 0.28);
+  --contact-button-shadow:
+    0 14px 30px rgba(84, 113, 156, 0.16),
+    0 0 0 1px rgba(92, 134, 198, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
+  --contact-button-text: rgba(32, 53, 84, 0.96);
+  --contact-button-hover-border: rgba(76, 145, 226, 0.38);
+  --contact-button-hover-shadow:
+    0 16px 34px rgba(84, 113, 156, 0.18),
+    0 0 18px rgba(76, 145, 226, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  --contact-copy-bg: rgba(237, 244, 255, 0.82);
+  --contact-copy-border: rgba(124, 151, 194, 0.18);
+  --contact-copy-hover-bg: rgba(255, 255, 255, 0.96);
+  --contact-copy-hover-border: rgba(92, 134, 198, 0.24);
+  --contact-success-bg:
+    linear-gradient(180deg, rgba(252, 255, 255, 0.98), rgba(242, 247, 255, 0.95)),
+    radial-gradient(circle at 50% 0%, rgba(76, 145, 226, 0.12), transparent 54%),
+    radial-gradient(circle at 80% 100%, rgba(37, 211, 102, 0.08), transparent 44%);
+  --contact-success-border: rgba(110, 145, 198, 0.18);
+  --contact-success-shadow:
+    0 24px 52px rgba(84, 113, 156, 0.15),
+    0 0 0 1px rgba(112, 148, 204, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.contact-page .contact-page-card,
+.contact-modal .modal {
+  background: var(--contact-shell-bg) !important;
+  border-color: var(--contact-shell-border) !important;
+  box-shadow: var(--contact-shell-shadow) !important;
+}
+
+.contact-modal .modal::before {
+  background:
+    radial-gradient(circle at top left, rgba(41, 151, 255, 0.14), transparent 48%),
+    radial-gradient(circle at bottom right, rgba(110, 58, 255, 0.08), transparent 54%) !important;
+  opacity: 0.92;
+}
+
+[data-theme="light"] .contact-modal .modal::before {
+  background:
+    radial-gradient(circle at top left, rgba(76, 145, 226, 0.12), transparent 50%),
+    radial-gradient(circle at bottom right, rgba(110, 58, 255, 0.06), transparent 56%) !important;
+}
+
+.contact-page .contact-page-head p,
+.contact-modal .modal-subtitle {
+  color: var(--text-secondary);
+}
+
+.contact-page .contact-page-group,
+.contact-page .contact-page-secondary,
+.contact-modal .contact-form-main,
+.contact-modal .contact-form-side .form-group,
+.contact-modal .contact-submit-wrap {
+  position: relative;
+  border: 1px solid var(--contact-panel-border);
+  background: var(--contact-panel-bg);
+  border-radius: 24px;
+  box-shadow: var(--contact-panel-shadow);
+}
+
+.contact-page .contact-page-group,
+.contact-modal .contact-form-main,
+.contact-modal .contact-form-side .form-group,
+.contact-modal .contact-submit-wrap {
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.contact-page .contact-page-secondary {
+  padding: 12px;
+}
+
+.contact-page .contact-page-actions {
+  padding-top: 0;
+  border-top: 0;
+  gap: 12px;
+}
+
+.contact-page .contact-page-group-head,
+.contact-modal .contact-modal-header {
+  margin-bottom: 0;
+}
+
+.contact-page .contact-page-group-head h2,
+.contact-modal .form-group label,
+.contact-page .form-group label {
+  color: var(--text);
+}
+
+.contact-page .contact-page-group-head p,
+.contact-page .contact-page-direct-links span,
+.contact-modal .contact-direct-links,
+.contact-modal .contact-direct-links a {
+  color: var(--text-secondary);
+}
+
+.contact-page .contact-page-service-card,
+.contact-modal .contact-service-card {
+  border: 1px solid var(--contact-panel-border) !important;
+  background:
+    linear-gradient(180deg, rgba(21, 27, 40, 0.74), rgba(12, 17, 28, 0.72)),
+    radial-gradient(circle at top, rgba(41, 151, 255, 0.05), transparent 58%) !important;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="light"] .contact-page .contact-page-service-card,
+[data-theme="light"] .contact-modal .contact-service-card {
+  background:
+    linear-gradient(180deg, rgba(249, 252, 255, 0.94), rgba(242, 247, 255, 0.88)),
+    radial-gradient(circle at top, rgba(76, 145, 226, 0.06), transparent 60%) !important;
+}
+
+.contact-page .contact-page-service-card:hover,
+.contact-modal .contact-service-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--contact-panel-border)) !important;
+  background:
+    linear-gradient(180deg, rgba(24, 31, 46, 0.86), rgba(14, 20, 34, 0.8)),
+    radial-gradient(circle at top, rgba(41, 151, 255, 0.08), transparent 56%) !important;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(41, 151, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .contact-page .contact-page-service-card:hover,
+[data-theme="light"] .contact-modal .contact-service-card:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 255, 0.94)),
+    radial-gradient(circle at top, rgba(76, 145, 226, 0.08), transparent 56%) !important;
+}
+
+.contact-page .contact-page-service-card.is-selected,
+.contact-page .contact-page-service-card:has(input:checked),
+.contact-modal .contact-service-card--selected,
+.contact-modal .contact-service-card:has(input:checked) {
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--contact-panel-border)) !important;
+  background:
+    linear-gradient(180deg, rgba(28, 39, 60, 0.9), rgba(17, 25, 40, 0.84)),
+    radial-gradient(circle at top left, rgba(41, 151, 255, 0.16), transparent 58%) !important;
+  box-shadow:
+    0 18px 34px rgba(2, 10, 26, 0.24),
+    0 0 0 1px rgba(41, 151, 255, 0.16),
+    inset 0 1px 0 rgba(221, 240, 255, 0.1);
+}
+
+[data-theme="light"] .contact-page .contact-page-service-card.is-selected,
+[data-theme="light"] .contact-page .contact-page-service-card:has(input:checked),
+[data-theme="light"] .contact-modal .contact-service-card--selected,
+[data-theme="light"] .contact-modal .contact-service-card:has(input:checked) {
+  background:
+    linear-gradient(180deg, rgba(235, 243, 255, 0.98), rgba(223, 237, 255, 0.92)),
+    radial-gradient(circle at top left, rgba(76, 145, 226, 0.14), transparent 58%) !important;
+}
+
+.contact-page .form-input,
+.contact-modal .form-input {
+  background: var(--contact-input-bg) !important;
+  border-color: var(--contact-input-border) !important;
+  color: var(--contact-input-text) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.contact-page .form-input::placeholder,
+.contact-modal .form-input::placeholder {
+  color: var(--contact-input-placeholder) !important;
+}
+
+.contact-page .form-input:focus,
+.contact-modal .form-input:focus {
+  border-color: var(--contact-input-focus-border) !important;
+  box-shadow: var(--contact-input-focus-shadow) !important;
+}
+
+.contact-page .contact-submit-btn--primary,
+.contact-modal .contact-submit-btn,
+.contact-page .contact-page-success-btn,
+.contact-modal #contactWaSuccessLink {
+  min-height: 56px;
+  border-radius: 999px;
+  border: 1px solid var(--contact-button-border) !important;
+  background: var(--contact-button-bg) !important;
+  color: var(--contact-button-text) !important;
+  box-shadow: var(--contact-button-shadow) !important;
+  backdrop-filter: blur(14px) saturate(148%);
+  -webkit-backdrop-filter: blur(14px) saturate(148%);
+}
+
+.contact-page .contact-submit-btn--primary:hover,
+.contact-modal .contact-submit-btn:hover,
+.contact-page .contact-page-success-btn:hover,
+.contact-modal #contactWaSuccessLink:hover {
+  border-color: var(--contact-button-hover-border) !important;
+  box-shadow: var(--contact-button-hover-shadow) !important;
+}
+
+.contact-page .contact-page-copy-btn {
+  background: var(--contact-copy-bg);
+  border-color: var(--contact-copy-border);
+  color: var(--text-secondary);
+}
+
+.contact-page .contact-page-copy-btn:hover {
+  background: var(--contact-copy-hover-bg);
+  border-color: var(--contact-copy-hover-border);
+  color: var(--text);
+}
+
+.contact-page .contact-page-email-row a,
+.contact-modal .contact-direct-links a {
+  color: var(--text);
+}
+
+.contact-page .contact-page-email-row a:hover,
+.contact-modal .contact-direct-links a:hover {
+  color: var(--accent);
+}
+
+.contact-modal .contact-direct-btn,
+.contact-page .contact-page-wa-btn {
+  border-radius: 18px !important;
+}
+
+.contact-page-success,
+.contact-modal #contactStep2 {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.contact-page-success::before,
+.contact-modal #contactStep2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(41, 151, 255, 0.14), transparent 54%),
+    radial-gradient(circle at 82% 100%, rgba(37, 211, 102, 0.12), transparent 42%);
+  opacity: 0.9;
+}
+
+[data-theme="light"] .contact-page-success::before,
+[data-theme="light"] .contact-modal #contactStep2::before {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(76, 145, 226, 0.12), transparent 56%),
+    radial-gradient(circle at 82% 100%, rgba(37, 211, 102, 0.08), transparent 42%);
+}
+
+.contact-page-success > *,
+.contact-modal #contactStep2 > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-page-success {
+  max-width: 960px;
+  min-height: clamp(420px, 58vh, 560px);
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 52px);
+  border-radius: 30px;
+  border: 1px solid var(--contact-success-border);
+  background: var(--contact-success-bg);
+  box-shadow: var(--contact-success-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.contact-modal #contactStep2 {
+  min-height: clamp(400px, 56vh, 520px);
+  margin: 20px;
+  padding: clamp(28px, 4vw, 42px) !important;
+  border-radius: 28px;
+  border: 1px solid var(--contact-success-border);
+  background: var(--contact-success-bg);
+  box-shadow: var(--contact-success-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.contact-page-success h2,
+.contact-modal #contactStep2 h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.65rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.contact-page-success .modal-subtitle,
+.contact-modal #contactStep2 .modal-subtitle {
+  max-width: 38ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.9vw, 1.14rem);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.contact-success-icon,
+.contact-modal #contactStep2 > div:first-child {
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  border: 1px solid rgba(101, 172, 255, 0.3);
+  background:
+    linear-gradient(180deg, rgba(24, 32, 50, 0.84), rgba(14, 19, 34, 0.78)),
+    radial-gradient(circle at top, rgba(41, 151, 255, 0.16), transparent 58%);
+  box-shadow:
+    0 16px 34px rgba(2, 10, 26, 0.26),
+    inset 0 1px 0 rgba(221, 240, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+[data-theme="light"] .contact-success-icon,
+[data-theme="light"] .contact-modal #contactStep2 > div:first-child {
+  background:
+    linear-gradient(180deg, rgba(235, 243, 255, 0.96), rgba(223, 237, 255, 0.9)),
+    radial-gradient(circle at top, rgba(76, 145, 226, 0.14), transparent 58%);
+  border-color: rgba(93, 138, 212, 0.24);
+  box-shadow:
+    0 16px 30px rgba(84, 113, 156, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.contact-modal #contactWaSuccessLink,
+.contact-page .contact-page-success-btn {
+  min-width: min(320px, 100%);
+}
+
+@media (max-width: 900px) {
+  .contact-page .contact-page-group,
+  .contact-modal .contact-form-main,
+  .contact-modal .contact-form-side .form-group,
+  .contact-modal .contact-submit-wrap {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .contact-modal #contactStep2 {
+    margin: 16px;
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-page .contact-page-group,
+  .contact-page .contact-page-secondary,
+  .contact-modal .contact-form-main,
+  .contact-modal .contact-form-side .form-group,
+  .contact-modal .contact-submit-wrap {
+    border-radius: 20px;
+  }
+
+  .contact-page-success {
+    min-height: 340px;
+    padding: 24px 18px;
+    border-radius: 24px;
+  }
+
+  .contact-modal #contactStep2 {
+    margin: 12px;
+    min-height: 300px;
+    padding: 22px 16px !important;
+    border-radius: 22px;
+  }
+
+  .contact-page-success h2,
+  .contact-modal #contactStep2 h2 {
+    font-size: clamp(1.65rem, 8vw, 2rem);
+  }
+
+  .contact-page-success .modal-subtitle,
+  .contact-modal #contactStep2 .modal-subtitle {
+    font-size: 0.96rem;
+  }
+
+  .contact-success-icon,
+  .contact-modal #contactStep2 > div:first-child {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+  }
+
+  .contact-modal #contactWaSuccessLink,
+  .contact-page .contact-page-success-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
