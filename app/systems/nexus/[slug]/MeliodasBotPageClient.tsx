@@ -208,22 +208,50 @@ const COPY = {
 
 type SupportedLang = 'en' | 'ar' | 'de' | 'ja'
 
-const SECURED_FIELD_COPY: Record<SupportedLang, { configured: string; notSet: string }> = {
+const SECURED_FIELD_COPY: Record<SupportedLang, {
+  configured: string
+  notSet: string
+  passwordSaved: string
+  passcodeSaved: string
+  reveal: string
+  hide: string
+  revealing: string
+}> = {
   en: {
     configured: 'Configured on server',
     notSet: 'Not set',
+    passwordSaved: 'Saved on server',
+    passcodeSaved: 'Configured on server',
+    reveal: 'Show saved value',
+    hide: 'Hide saved value',
+    revealing: 'Loading saved value',
   },
   ar: {
     configured: '\u062a\u0645 \u062d\u0641\u0638\u0647 \u0639\u0644\u0649 \u0627\u0644\u062e\u0627\u062f\u0645',
     notSet: '\u063a\u064a\u0631 \u0645\u0636\u0628\u0648\u0637',
+    passwordSaved: '\u0645\u062d\u0641\u0648\u0638 \u0639\u0644\u0649 \u0627\u0644\u062e\u0627\u062f\u0645',
+    passcodeSaved: '\u062a\u0645 \u062d\u0641\u0638\u0647 \u0639\u0644\u0649 \u0627\u0644\u062e\u0627\u062f\u0645',
+    reveal: '\u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0642\u064a\u0645\u0629 \u0627\u0644\u0645\u062d\u0641\u0648\u0638\u0629',
+    hide: '\u0625\u062e\u0641\u0627\u0621 \u0627\u0644\u0642\u064a\u0645\u0629',
+    revealing: '\u062c\u0627\u0631\u064a \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0642\u064a\u0645\u0629 \u0627\u0644\u0645\u062d\u0641\u0648\u0638\u0629',
   },
   de: {
     configured: 'Auf dem Server gespeichert',
     notSet: 'Nicht gesetzt',
+    passwordSaved: 'Auf dem Server gespeichert',
+    passcodeSaved: 'Auf dem Server gespeichert',
+    reveal: 'Gespeicherten Wert anzeigen',
+    hide: 'Wert ausblenden',
+    revealing: 'Gespeicherten Wert wird geladen',
   },
   ja: {
     configured: '\u30b5\u30fc\u30d0\u30fc\u306b\u8a2d\u5b9a\u6e08\u307f',
     notSet: '\u672a\u8a2d\u5b9a',
+    passwordSaved: '\u30b5\u30fc\u30d0\u30fc\u306b\u4fdd\u5b58\u6e08\u307f',
+    passcodeSaved: '\u30b5\u30fc\u30d0\u30fc\u306b\u8a2d\u5b9a\u6e08\u307f',
+    reveal: '\u4fdd\u5b58\u6e08\u307f\u306e\u5024\u3092\u8868\u793a',
+    hide: '\u5024\u3092\u96a0\u3059',
+    revealing: '\u4fdd\u5b58\u6e08\u307f\u306e\u5024\u3092\u8aad\u307f\u8fbc\u307f\u4e2d',
   },
 }
 
@@ -238,7 +266,17 @@ type MeliodasSettingsResponse = {
 }
 
 type MeliodasCredentialsResponse = {
+  username?: string
   configured?: boolean
+  enabled?: boolean
+}
+
+type MeliodasCredentialsRevealResponse = {
+  password?: string
+}
+
+type MeliodasPasscodeRevealResponse = {
+  passcode?: string
 }
 
 function normalizeSettings(next?: MeliodasSettingsResponse): MeliodasSettings {
@@ -260,9 +298,9 @@ function savedSettingsFromDraft(settings: MeliodasSettings): MeliodasSettings {
   }
 }
 
-function savedCredentialsState(configured: boolean): MeliodasCredentials {
+function savedCredentialsState(username: string, configured: boolean): MeliodasCredentials {
   return {
-    username: '',
+    username,
     password: '',
     configured,
   }
@@ -544,11 +582,97 @@ function AllowedAccountsCard({
   )
 }
 
+function SecretToggleIcon({ revealed }: { revealed: boolean }) {
+  if (revealed) {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.secretToggleIcon}>
+        <path
+          d="M3 3l18 18m-9-3a6 6 0 0 1-6-6m3.2-4.1A6 6 0 0 1 12 6c5.2 0 8.7 6 8.7 6a15.5 15.5 0 0 1-4.2 4.9M9.9 9.9A3 3 0 0 0 12 15"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    )
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.secretToggleIcon}>
+      <path
+        d="M2.8 12S6.3 6 12 6s9.2 6 9.2 6-3.5 6-9.2 6S2.8 12 2.8 12Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12" r="2.7" fill="none" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  )
+}
+
+function SecretField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  visible,
+  canToggle,
+  isLoading,
+  onToggle,
+  toggleLabel,
+  hint,
+}: {
+  label: string
+  value: string
+  onChange: (next: string) => void
+  placeholder: string
+  visible: boolean
+  canToggle: boolean
+  isLoading: boolean
+  onToggle: () => void
+  toggleLabel: string
+  hint?: string
+}) {
+  return (
+    <label className={styles.field}>
+      <span>{label}</span>
+      <div className={styles.secretInputWrap}>
+        <input
+          className={`${styles.input} ${styles.secretInput}`}
+          type={visible ? 'text' : 'password'}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+        />
+        <button
+          type="button"
+          className={styles.secretToggle}
+          onClick={onToggle}
+          disabled={isLoading || !canToggle}
+          aria-label={toggleLabel}
+          title={toggleLabel}
+        >
+          <SecretToggleIcon revealed={visible} />
+        </button>
+      </div>
+      {hint ? <span className={styles.fieldHint}>{hint}</span> : null}
+    </label>
+  )
+}
+
 function GoogleAccountCard({
   copy,
   securedFieldCopy,
   credentials,
+  passwordValue,
+  passwordVisible,
+  canTogglePassword,
+  revealingPassword,
   onChange,
+  onTogglePassword,
   onSave,
   isSaving,
   isDirty,
@@ -556,7 +680,12 @@ function GoogleAccountCard({
   copy: CopyEntry
   securedFieldCopy: SecuredFieldCopy
   credentials: MeliodasCredentials
+  passwordValue: string
+  passwordVisible: boolean
+  canTogglePassword: boolean
+  revealingPassword: boolean
   onChange: (next: MeliodasCredentials) => void
+  onTogglePassword: () => void
   onSave: () => void
   isSaving: boolean
   isDirty: boolean
@@ -589,21 +718,31 @@ function GoogleAccountCard({
           />
         </label>
 
-        <label className={styles.field}>
-          <span>{copy.passwordLabel}</span>
-          <input
-            className={styles.input}
-            type="password"
-            value={credentials.password}
-            onChange={(event) =>
-              onChange({
-                ...credentials,
-                password: event.target.value,
-              })
-            }
-            placeholder={copy.passwordPlaceholder}
-          />
-        </label>
+        <SecretField
+          label={copy.passwordLabel}
+          value={passwordValue}
+          onChange={(next) =>
+            onChange({
+              ...credentials,
+              password: next,
+            })
+          }
+          placeholder={
+            credentials.configured && !credentials.password && !passwordVisible
+              ? securedFieldCopy.passwordSaved
+              : copy.passwordPlaceholder
+          }
+          visible={passwordVisible}
+          canToggle={canTogglePassword}
+          isLoading={revealingPassword}
+          onToggle={onTogglePassword}
+          toggleLabel={passwordVisible ? securedFieldCopy.hide : securedFieldCopy.reveal}
+          hint={
+            credentials.configured && !credentials.password && !passwordVisible
+              ? securedFieldCopy.passwordSaved
+              : undefined
+          }
+        />
       </div>
 
       <button
@@ -622,7 +761,12 @@ function SettingsCard({
   copy,
   securedFieldCopy,
   settings,
+  passcodeValue,
+  passcodeVisible,
+  canTogglePasscode,
+  revealingPasscode,
   onChange,
+  onTogglePasscode,
   onSave,
   isSaving,
   isDirty,
@@ -630,7 +774,12 @@ function SettingsCard({
   copy: CopyEntry
   securedFieldCopy: SecuredFieldCopy
   settings: MeliodasSettings
+  passcodeValue: string
+  passcodeVisible: boolean
+  canTogglePasscode: boolean
+  revealingPasscode: boolean
   onChange: (next: MeliodasSettings) => void
+  onTogglePasscode: () => void
   onSave: () => void
   isSaving: boolean
   isDirty: boolean
@@ -696,21 +845,31 @@ function SettingsCard({
           />
         </label>
 
-        <label className={styles.field}>
-          <span>{copy.passcodeLabel}</span>
-          <input
-            className={styles.input}
-            type="password"
-            value={settings.passcode}
-            onChange={(event) =>
-              onChange({
-                ...settings,
-                passcode: event.target.value,
-              })
-            }
-            placeholder={copy.passcodePlaceholder}
-          />
-        </label>
+        <SecretField
+          label={copy.passcodeLabel}
+          value={passcodeValue}
+          onChange={(next) =>
+            onChange({
+              ...settings,
+              passcode: next,
+            })
+          }
+          placeholder={
+            settings.passcodeConfigured && !settings.passcode && !passcodeVisible
+              ? securedFieldCopy.passcodeSaved
+              : copy.passcodePlaceholder
+          }
+          visible={passcodeVisible}
+          canToggle={canTogglePasscode}
+          isLoading={revealingPasscode}
+          onToggle={onTogglePasscode}
+          toggleLabel={passcodeVisible ? securedFieldCopy.hide : securedFieldCopy.reveal}
+          hint={
+            settings.passcodeConfigured && !settings.passcode && !passcodeVisible
+              ? securedFieldCopy.passcodeSaved
+              : undefined
+          }
+        />
       </div>
 
       <button
@@ -748,10 +907,15 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
   const [savedSettings, setSavedSettings] = useState<MeliodasSettings>(DEFAULT_SETTINGS)
   const [credentials, setCredentials] = useState<MeliodasCredentials>(DEFAULT_CREDENTIALS)
   const [savedCredentials, setSavedCredentials] = useState<MeliodasCredentials>(DEFAULT_CREDENTIALS)
+  const [revealedPassword, setRevealedPassword] = useState<string | null>(null)
+  const [revealedPasscode, setRevealedPasscode] = useState<string | null>(null)
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const [passcodeVisible, setPasscodeVisible] = useState(false)
   const [logs, setLogs] = useState<{text:string,ts:string}[]>([])
   const [loading, setLoading] = useState(true)
   const [flash, setFlash] = useState<FlashState | null>(null)
   const [savingState, setSavingState] = useState<'accounts' | 'credentials' | 'settings' | null>(null)
+  const [revealingState, setRevealingState] = useState<'credentials' | 'passcode' | null>(null)
   const [controlState, setControlState] = useState<'idle' | 'starting' | 'stopping'>('idle')
   const flashTimerRef = useRef<number | null>(null)
   const botSlug = bot.bot_slug
@@ -794,7 +958,10 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
         }
 
         if (credentialsData.status === 'fulfilled') {
-          const nextCredentials = savedCredentialsState(Boolean(credentialsData.value.configured))
+          const nextCredentials = savedCredentialsState(
+            credentialsData.value.username || '',
+            Boolean(credentialsData.value.configured)
+          )
           setCredentials(nextCredentials)
           setSavedCredentials(nextCredentials)
         }
@@ -888,7 +1055,7 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     setSavingState('credentials')
 
     try {
-      await requestMeliodas(botSlug, 'credentials', {
+      const payload = await requestMeliodas<MeliodasCredentialsResponse & { success?: boolean }>(botSlug, 'credentials', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -898,9 +1065,14 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
           password: credentials.password,
         }),
       })
-      const nextCredentials = savedCredentialsState(true)
+      const nextCredentials = savedCredentialsState(
+        credentials.username,
+        Boolean(payload.configured ?? true)
+      )
       setCredentials(nextCredentials)
       setSavedCredentials(nextCredentials)
+      setRevealedPassword(null)
+      setPasswordVisible(false)
       showFlash('success', copy.accountSaved)
     } catch (error) {
       showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
@@ -923,6 +1095,8 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
       const nextSettings = savedSettingsFromDraft(settings)
       setSettings(nextSettings)
       setSavedSettings(nextSettings)
+      setRevealedPasscode(null)
+      setPasscodeVisible(false)
       showFlash('success', copy.settingsSaved)
     } catch (error) {
       showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
@@ -979,6 +1153,66 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
   const accountsDirty = settings.allowed_accounts !== savedSettings.allowed_accounts
   const credentialsDirty = !sameCredentials(credentials, savedCredentials)
   const settingsDirty = !sameSettings(settings, savedSettings)
+  const credentialPasswordValue =
+    credentials.password || (passwordVisible ? revealedPassword ?? '' : '')
+  const passcodeValue =
+    settings.passcode || (passcodeVisible ? revealedPasscode ?? '' : '')
+  const canTogglePassword = Boolean(credentials.password || credentials.configured)
+  const canTogglePasscode = Boolean(settings.passcode || settings.passcodeConfigured)
+
+  const togglePasswordReveal = async () => {
+    if (credentials.password) {
+      setPasswordVisible((current) => !current)
+      return
+    }
+
+    if (passwordVisible) {
+      setPasswordVisible(false)
+      return
+    }
+
+    try {
+      if (revealedPassword === null) {
+        setRevealingState('credentials')
+        const payload = await requestMeliodas<MeliodasCredentialsRevealResponse>(botSlug, 'credentials-reveal', {
+          method: 'POST',
+        })
+        setRevealedPassword(payload.password || '')
+      }
+      setPasswordVisible(true)
+    } catch (error) {
+      showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
+    } finally {
+      setRevealingState(null)
+    }
+  }
+
+  const togglePasscodeReveal = async () => {
+    if (settings.passcode) {
+      setPasscodeVisible((current) => !current)
+      return
+    }
+
+    if (passcodeVisible) {
+      setPasscodeVisible(false)
+      return
+    }
+
+    try {
+      if (revealedPasscode === null) {
+        setRevealingState('passcode')
+        const payload = await requestMeliodas<MeliodasPasscodeRevealResponse>(botSlug, 'passcode-reveal', {
+          method: 'POST',
+        })
+        setRevealedPasscode(payload.passcode || '')
+      }
+      setPasscodeVisible(true)
+    } catch (error) {
+      showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
+    } finally {
+      setRevealingState(null)
+    }
+  }
 
   return (
     <div className="systems-page systems-page--nexus-bot systems-page--meliodas" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -1040,7 +1274,12 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
                   copy={copy}
                   securedFieldCopy={securedFieldCopy}
                   credentials={credentials}
+                  passwordValue={credentialPasswordValue}
+                  passwordVisible={passwordVisible}
+                  canTogglePassword={canTogglePassword}
+                  revealingPassword={revealingState === 'credentials'}
                   onChange={setCredentials}
+                  onTogglePassword={togglePasswordReveal}
                   onSave={saveCredentials}
                   isSaving={savingState === 'credentials'}
                   isDirty={credentialsDirty}
@@ -1053,7 +1292,12 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
                 copy={copy}
                 securedFieldCopy={securedFieldCopy}
                 settings={settings}
+                passcodeValue={passcodeValue}
+                passcodeVisible={passcodeVisible}
+                canTogglePasscode={canTogglePasscode}
+                revealingPasscode={revealingState === 'passcode'}
                 onChange={setSettings}
+                onTogglePasscode={togglePasscodeReveal}
                 onSave={saveSettings}
                 isSaving={savingState === 'settings'}
                 isDirty={settingsDirty}

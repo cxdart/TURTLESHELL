@@ -8,12 +8,26 @@ const ALLOWED_ENDPOINTS = new Set([
   'status',
   'logs',
   'credentials',
+  'credentials-reveal',
   'settings',
+  'passcode-reveal',
   'start',
   'stop',
 ])
 
 const DEFAULT_API_BASE = 'http://127.0.0.1:5000'
+const REVEAL_ENDPOINTS = new Set(['credentials-reveal', 'passcode-reveal'])
+
+function getUpstreamEndpoint(endpoint: string) {
+  switch (endpoint) {
+    case 'credentials-reveal':
+      return 'credentials/reveal'
+    case 'passcode-reveal':
+      return 'settings/passcode/reveal'
+    default:
+      return endpoint
+  }
+}
 
 async function authorizeOwnedBot(botSlug: string) {
   const supabase = await createClient()
@@ -59,7 +73,7 @@ async function authorizeOwnedBot(botSlug: string) {
 
 function getUpstreamUrl(botId: string, endpoint: string) {
   const baseUrl = (process.env.MELIODAS_API_BASE_URL || DEFAULT_API_BASE).replace(/\/$/, '')
-  return `${baseUrl}/api/bots/${encodeURIComponent(botId)}/${endpoint}`
+  return `${baseUrl}/api/bots/${encodeURIComponent(botId)}/${getUpstreamEndpoint(endpoint)}`
 }
 
 async function proxyRequest(request: NextRequest, botSlug: string, endpoint: string) {
@@ -68,6 +82,10 @@ async function proxyRequest(request: NextRequest, botSlug: string, endpoint: str
 
   if (!ALLOWED_ENDPOINTS.has(endpoint)) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+
+  if (REVEAL_ENDPOINTS.has(endpoint) && request.method !== 'POST') {
+    return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
   }
 
   const headers = new Headers()
@@ -94,6 +112,9 @@ async function proxyRequest(request: NextRequest, botSlug: string, endpoint: str
       'content-type',
       upstream.headers.get('content-type') || 'application/json; charset=utf-8'
     )
+    if (REVEAL_ENDPOINTS.has(endpoint)) {
+      responseHeaders.set('Cache-Control', 'no-store')
+    }
 
     return new NextResponse(text, {
       status: upstream.status,
