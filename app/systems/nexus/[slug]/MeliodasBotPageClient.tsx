@@ -637,7 +637,7 @@ function SecretField({
   hint?: string
 }) {
   return (
-    <label className={styles.field}>
+    <div className={styles.field}>
       <span>{label}</span>
       <div className={styles.secretInputWrap}>
         <input
@@ -650,16 +650,18 @@ function SecretField({
         <button
           type="button"
           className={styles.secretToggle}
+          onMouseDown={(event) => event.preventDefault()}
           onClick={onToggle}
           disabled={isLoading || !canToggle}
           aria-label={toggleLabel}
+          aria-pressed={visible}
           title={toggleLabel}
         >
           <SecretToggleIcon revealed={visible} />
         </button>
       </div>
       {hint ? <span className={styles.fieldHint}>{hint}</span> : null}
-    </label>
+    </div>
   )
 }
 

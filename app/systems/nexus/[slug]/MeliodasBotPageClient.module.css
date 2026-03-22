@@ -336,6 +336,13 @@
 
 .secretInput {
   padding-inline-end: 50px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.secretInput::-ms-reveal,
+.secretInput::-ms-clear {
+  display: none;
 }
 
 .secretToggle {
@@ -348,6 +355,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
