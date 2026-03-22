@@ -13,10 +13,15 @@ const COPY = {
     en: {
         title: 'Contact Us',
         subtitle: 'Tell us what you want to build and we will reply with a clear plan within 24 hours.',
+        step_label: 'Step',
         services_title: 'Choose a service',
         services_subtitle: 'Pick the area that best matches your project.',
         contact_info_title: 'Contact information',
+        contact_info_subtitle: 'Tell us who we should reply to.',
         project_title: 'Describe your project',
+        project_subtitle: 'Share the goal, scope, or anything important for us to know.',
+        actions_title: 'Start the conversation',
+        actions_subtitle: 'Send your brief or reach out on WhatsApp.',
         name: 'Name',
         email: 'Email',
         phone: 'Phone',
@@ -52,10 +57,15 @@ const COPY = {
     ar: {
         title: '\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627',
         subtitle: '\u0627\u062e\u0628\u0631\u0646\u0627 \u0645\u0627\u0630\u0627 \u062a\u0631\u064a\u062f \u0623\u0646 \u062a\u0628\u0646\u064a\u060c \u0648\u0633\u0646\u0631\u062f \u0639\u0644\u064a\u0643 \u0628\u062e\u0637\u0629 \u0648\u0627\u0636\u062d\u0629 \u062e\u0644\u0627\u0644 24 \u0633\u0627\u0639\u0629.',
+        step_label: '\u0627\u0644\u062e\u0637\u0648\u0629',
         services_title: '\u0627\u062e\u062a\u0631 \u0627\u0644\u062e\u062f\u0645\u0629',
         services_subtitle: '\u062d\u062f\u062f \u0627\u0644\u0645\u062c\u0627\u0644 \u0627\u0644\u0623\u0642\u0631\u0628 \u0644\u0645\u0634\u0631\u0648\u0639\u0643.',
         contact_info_title: '\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u062a\u0648\u0627\u0635\u0644',
+        contact_info_subtitle: '\u0623\u062e\u0628\u0631\u0646\u0627 \u0643\u064a\u0641 \u064a\u0645\u0643\u0646\u0646\u0627 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0643.',
         project_title: '\u0627\u0634\u0631\u062d \u0645\u0634\u0631\u0648\u0639\u0643',
+        project_subtitle: '\u0634\u0627\u0631\u0643 \u0627\u0644\u0647\u062f\u0641 \u0648\u0627\u0644\u0646\u0637\u0627\u0642 \u0623\u0648 \u0623\u064a \u062a\u0641\u0627\u0635\u064a\u0644 \u0645\u0647\u0645\u0629 \u0646\u062d\u062a\u0627\u062c \u0645\u0639\u0631\u0641\u062a\u0647\u0627.',
+        actions_title: '\u0627\u0628\u062f\u0623 \u0627\u0644\u0645\u062d\u0627\u062f\u062b\u0629',
+        actions_subtitle: '\u0623\u0631\u0633\u0644 \u0645\u0644\u062e\u0635\u0643 \u0623\u0648 \u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627 \u0639\u0628\u0631 \u0648\u0627\u062a\u0633\u0627\u0628.',
         name: '\u0627\u0644\u0627\u0633\u0645',
         email: '\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a',
         phone: '\u0631\u0642\u0645 \u0627\u0644\u0647\u0627\u062a\u0641',
@@ -91,10 +101,15 @@ const COPY = {
     de: {
         title: 'Kontakt',
         subtitle: 'Beschreiben Sie Ihr Vorhaben, wir antworten innerhalb von 24 Stunden mit einem klaren Plan.',
+        step_label: 'Schritt',
         services_title: 'Service waehlen',
         services_subtitle: 'Waehlen Sie den Bereich, der am besten passt.',
         contact_info_title: 'Kontaktdaten',
+        contact_info_subtitle: 'Sagen Sie uns, wie wir Sie erreichen koennen.',
         project_title: 'Projektbeschreibung',
+        project_subtitle: 'Teilen Sie Ziel, Umfang oder wichtige Details zu Ihrem Projekt.',
+        actions_title: 'Konversation starten',
+        actions_subtitle: 'Senden Sie Ihr Briefing oder schreiben Sie uns direkt bei WhatsApp.',
         name: 'Name',
         email: 'E-Mail',
         phone: 'Telefon',
@@ -130,10 +145,15 @@ const COPY = {
     ja: {
         title: '\u304A\u554F\u3044\u5408\u308F\u305B',
         subtitle: '\u4F5C\u308A\u305F\u3044\u5185\u5BB9\u3092\u6559\u3048\u3066\u304F\u3060\u3055\u3044\u300224\u6642\u9593\u4EE5\u5185\u306B\u8A73\u7D30\u3092\u3054\u8FD4\u4FE1\u3057\u307E\u3059\u3002',
+        step_label: 'STEP',
         services_title: '\u30B5\u30FC\u30D3\u30B9\u3092\u9078\u629E',
         services_subtitle: '\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u306B\u8FD1\u3044\u9805\u76EE\u3092\u9078\u3093\u3067\u304F\u3060\u3055\u3044\u3002',
         contact_info_title: '\u9023\u7D61\u60C5\u5831',
+        contact_info_subtitle: '\u3053\u3061\u3089\u304B\u3089\u8FD4\u4FE1\u3059\u308B\u9023\u7D61\u5148\u3092\u6559\u3048\u3066\u304F\u3060\u3055\u3044\u3002',
         project_title: '\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u306E\u5185\u5BB9',
+        project_subtitle: '\u76EE\u7684\u3084\u7BC4\u56F2\u3001\u91CD\u8981\u306A\u524D\u63D0\u6761\u4EF6\u304C\u3042\u308C\u3070\u6559\u3048\u3066\u304F\u3060\u3055\u3044\u3002',
+        actions_title: '\u76F8\u8AC7\u3092\u59CB\u3081\u308B',
+        actions_subtitle: '\u6982\u8981\u3092\u9001\u308B\u304B\u3001WhatsApp\u3067\u76F4\u63A5\u3054\u9023\u7D61\u304F\u3060\u3055\u3044\u3002',
         name: '\u304A\u540D\u524D',
         email: '\u30E1\u30FC\u30EB',
         phone: '\u96FB\u8A71',
@@ -193,6 +213,7 @@ export default function ContactPage() {
     const [phone, setPhone] = useState('')
     const [project, setProject] = useState('')
     const [emailCopied, setEmailCopied] = useState(false)
+    const stepText = (step: number) => `${copy.step_label} ${step}`
 
     useEffect(() => {
         let mounted = true
@@ -301,6 +322,7 @@ export default function ContactPage() {
 
                                     <section className="contact-page-group contact-page-group--services">
                                         <div className="contact-page-group-head">
+                                            <span className="contact-page-step">{stepText(1)}</span>
                                             <h2>{copy.services_title}</h2>
                                             <p>{copy.services_subtitle}</p>
                                         </div>
@@ -330,7 +352,9 @@ export default function ContactPage() {
 
                                     <section className="contact-page-group">
                                         <div className="contact-page-group-head">
+                                            <span className="contact-page-step">{stepText(2)}</span>
                                             <h2>{copy.contact_info_title}</h2>
+                                            <p>{copy.contact_info_subtitle}</p>
                                         </div>
 
                                         <div className="form-row contact-page-row contact-page-row--two">
@@ -373,7 +397,9 @@ export default function ContactPage() {
 
                                     <section className="contact-page-group">
                                         <div className="contact-page-group-head">
+                                            <span className="contact-page-step">{stepText(3)}</span>
                                             <h2>{copy.project_title}</h2>
+                                            <p>{copy.project_subtitle}</p>
                                         </div>
                                         <div className="form-group contact-message-group">
                                             <label>{copy.project}</label>
@@ -389,16 +415,22 @@ export default function ContactPage() {
                                     </section>
 
                                     <section className="contact-page-actions">
-                                        <LightButton type="submit" variant="hollow" className="contact-submit-btn contact-submit-btn--primary" disabled={status === 'sending'}>
-                                            <span>{status === 'sending' ? copy.sending : copy.send}</span>
-                                            {status !== 'sending' && (
-                                                <span className={`arrow ${isRTL ? 'arrow--left' : 'arrow--right'}`}>
-                                                    {isRTL ? '\u2190' : '\u2192'}
-                                                </span>
-                                            )}
-                                        </LightButton>
+                                        <div className="contact-page-group-head contact-page-group-head--actions">
+                                            <span className="contact-page-step">{stepText(4)}</span>
+                                            <h2>{copy.actions_title}</h2>
+                                            <p>{copy.actions_subtitle}</p>
+                                        </div>
 
-                                        <div className="contact-page-secondary">
+                                        <div className="contact-page-action-grid">
+                                            <LightButton type="submit" variant="hollow" className="contact-submit-btn contact-submit-btn--primary" disabled={status === 'sending'}>
+                                                <span>{status === 'sending' ? copy.sending : copy.send}</span>
+                                                {status !== 'sending' && (
+                                                    <span className={`arrow ${isRTL ? 'arrow--left' : 'arrow--right'}`}>
+                                                        {isRTL ? '\u2190' : '\u2192'}
+                                                    </span>
+                                                )}
+                                            </LightButton>
+
                                             <a
                                                 href={WHATSAPP_LINK}
                                                 target="_blank"
@@ -408,7 +440,9 @@ export default function ContactPage() {
                                                 <span>{'\uD83D\uDCAC'}</span>
                                                 <span>{copy.whatsapp}</span>
                                             </a>
+                                        </div>
 
+                                        <div className="contact-page-secondary">
                                             <div className="contact-divider">
                                                 <span>{copy.or}</span>
                                             </div>

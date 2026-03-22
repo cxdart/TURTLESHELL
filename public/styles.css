@@ -5573,20 +5573,22 @@ html[dir="rtl"] #genos-details .about-text li {
   .contact-page-section {
     position: relative;
     z-index: 1;
-    max-width: min(960px, calc(100% - 40px));
-    padding-top: clamp(98px, 10.6vw, 124px);
+    max-width: min(916px, calc(100% - 40px));
+    padding-top: clamp(86px, 8.8vw, 104px);
     padding-bottom: 0;
   }
 
   .contact-page-wrap,
   .contact-page-success {
-    max-width: 960px;
+    max-width: 872px;
     margin: 0 auto;
   }
 
   .contact-page-head {
     text-align: center;
-    margin-bottom: 24px;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5610,27 +5612,27 @@ html[dir="rtl"] #genos-details .about-text li {
   }
 
   .contact-page-head h1 {
-    font-size: clamp(2.2rem, 4.8vw, 3.25rem);
-    line-height: 1.08;
+    font-size: clamp(2rem, 4vw, 2.78rem);
+    line-height: 1.04;
     letter-spacing: -0.035em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-wrap: balance;
   }
 
   .contact-page-head p {
-    max-width: 660px;
+    max-width: 38ch;
     margin: 0 auto;
     color: var(--text-secondary);
-    font-size: clamp(1.05rem, 2.15vw, 1.35rem);
-    line-height: 1.44;
+    font-size: clamp(0.98rem, 1.36vw, 1.12rem);
+    line-height: 1.5;
     text-wrap: pretty;
   }
 
   .contact-page-card {
     position: relative;
-    border-radius: 28px;
+    border-radius: 26px;
     border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--border));
-    padding: clamp(18px, 2.8vw, 30px);
+    padding: clamp(16px, 2.2vw, 24px);
     background:
       linear-gradient(180deg,
         rgba(8, 12, 22, 0.88),
@@ -5638,7 +5640,7 @@ html[dir="rtl"] #genos-details .about-text li {
       radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 45%),
       radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--gradient-orb-2) 6%, transparent) 0%, transparent 45%);
     box-shadow:
-      0 32px 84px rgba(0, 0, 0, 0.44),
+      0 24px 64px rgba(0, 0, 0, 0.38),
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -6005,8 +6007,8 @@ html[dir="rtl"] #genos-details .about-text li {
 
   @media (max-width: 1160px) {
     .contact-page-section {
-      max-width: calc(100% - 24px);
-      padding-top: clamp(102px, 15vw, 132px);
+      max-width: min(890px, calc(100% - 30px));
+      padding-top: clamp(84px, 11vw, 102px);
     }
 
     .contact-page-form {
@@ -12607,7 +12609,7 @@ html[dir="rtl"] #genos-details .about-text li {
   .contact-page .contact-page-form--stack {
     display: flex !important;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
 
   .contact-page .contact-page-group {
@@ -12639,7 +12641,7 @@ html[dir="rtl"] #genos-details .about-text li {
 
   .contact-page .contact-page-row {
     display: grid;
-    gap: 8px;
+    gap: 10px;
   }
 
   .contact-page .contact-page-row--two {
@@ -12651,28 +12653,28 @@ html[dir="rtl"] #genos-details .about-text li {
   }
 
   .contact-page .form-input {
-    min-height: 42px;
-    border-radius: 12px;
-    padding: 9px 12px;
+    min-height: 46px;
+    border-radius: 14px;
+    padding: 10px 14px;
   }
 
   .contact-page .contact-message-group .form-input {
-    min-height: 116px;
+    min-height: 136px;
     line-height: 1.45;
     resize: vertical;
   }
 
   .contact-page .contact-page-service-grid--enhanced {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .contact-page .contact-page-service-card {
-    min-height: 78px;
-    padding: 11px 11px 10px;
+    min-height: 88px;
+    padding: 14px 14px 13px;
     align-items: flex-start;
-    gap: 7px;
+    gap: 10px;
   }
 
   .contact-page .contact-page-service-icon {
@@ -12687,7 +12689,7 @@ html[dir="rtl"] #genos-details .about-text li {
   }
 
   .contact-page .contact-page-service-label {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     font-weight: 700;
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -12695,8 +12697,8 @@ html[dir="rtl"] #genos-details .about-text li {
   }
 
   .contact-page .contact-page-service-desc {
-    font-size: 0.74rem;
-    line-height: 1.25;
+    font-size: 0.78rem;
+    line-height: 1.34;
     color: var(--text-secondary);
     letter-spacing: 0.01em;
     text-transform: none;
@@ -12705,11 +12707,9 @@ html[dir="rtl"] #genos-details .about-text li {
 
   .contact-page .contact-page-actions {
     margin-top: 0;
-    padding-top: 8px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
   }
 
   .contact-page .contact-submit-btn--primary {
@@ -12741,9 +12741,9 @@ html[dir="rtl"] #genos-details .about-text li {
   .contact-page .contact-page-secondary {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 8px;
-    border-radius: 12px;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     background: rgba(255, 255, 255, 0.025);
   }
@@ -12783,7 +12783,7 @@ html[dir="rtl"] #genos-details .about-text li {
   .contact-page .contact-page-email-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
@@ -15052,22 +15052,46 @@ html[dir="rtl"] #genos-details .about-text li {
 .contact-modal .contact-form-main,
 .contact-modal .contact-form-side .form-group,
 .contact-modal .contact-submit-wrap {
-  padding: clamp(16px, 2vw, 22px);
+  padding: clamp(15px, 1.8vw, 18px);
 }
 
 .contact-page .contact-page-secondary {
-  padding: 12px;
+  padding: 14px 16px;
 }
 
 .contact-page .contact-page-actions {
-  padding-top: 0;
-  border-top: 0;
-  gap: 12px;
+  position: relative;
+  padding: clamp(16px, 2vw, 20px);
+  border: 1px solid var(--contact-panel-border);
+  background: var(--contact-panel-bg);
+  border-radius: 24px;
+  box-shadow: var(--contact-panel-shadow);
+  gap: 14px;
 }
 
 .contact-page .contact-page-group-head,
 .contact-modal .contact-modal-header {
   margin-bottom: 0;
+}
+
+.contact-page .contact-page-group-head {
+  gap: 6px;
+}
+
+.contact-page .contact-page-step {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 76%, white 24%);
+  padding: 0;
+}
+
+[data-theme="light"] .contact-page .contact-page-step {
+  color: color-mix(in srgb, var(--accent) 74%, #173e69 26%);
 }
 
 .contact-page .contact-page-group-head h2,
@@ -15081,6 +15105,14 @@ html[dir="rtl"] #genos-details .about-text li {
 .contact-modal .contact-direct-links,
 .contact-modal .contact-direct-links a {
   color: var(--text-secondary);
+}
+
+.contact-page .contact-page-group-head p {
+  max-width: 44ch;
+}
+
+.contact-page .contact-page-group-head--actions p {
+  max-width: 48ch;
 }
 
 .contact-page .contact-page-service-card,
@@ -15151,6 +15183,16 @@ html[dir="rtl"] #genos-details .about-text li {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
 }
 
+.contact-page .form-input {
+  min-height: 46px;
+  padding: 10px 14px;
+  border-radius: 14px;
+}
+
+.contact-page .contact-message-group .form-input {
+  min-height: 136px;
+}
+
 .contact-page .form-input::placeholder,
 .contact-modal .form-input::placeholder {
   color: var(--contact-input-placeholder) !important;
@@ -15211,6 +15253,17 @@ html[dir="rtl"] #genos-details .about-text li {
   border-radius: 18px !important;
 }
 
+.contact-page .contact-page-action-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.contact-page .contact-submit-btn--primary,
+.contact-page .contact-page-wa-btn {
+  width: 100%;
+}
+
 .contact-page-success,
 .contact-modal #contactStep2 {
   position: relative;
@@ -15244,8 +15297,8 @@ html[dir="rtl"] #genos-details .about-text li {
 }
 
 .contact-page-success {
-  max-width: 960px;
-  min-height: clamp(420px, 58vh, 560px);
+  max-width: 872px;
+  min-height: clamp(380px, 52vh, 500px);
   margin: 0 auto;
   scroll-margin-top: calc(var(--nav-height) + 18px);
   padding: clamp(32px, 5vw, 52px);
@@ -15328,11 +15381,16 @@ html[dir="rtl"] #genos-details .about-text li {
 
 @media (max-width: 900px) {
   .contact-page .contact-page-group,
+  .contact-page .contact-page-actions,
   .contact-modal .contact-form-main,
   .contact-modal .contact-form-side .form-group,
   .contact-modal .contact-submit-wrap {
     padding: 16px;
     border-radius: 22px;
+  }
+
+  .contact-page .contact-page-action-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .contact-modal #contactStep2 {
@@ -15344,6 +15402,7 @@ html[dir="rtl"] #genos-details .about-text li {
 @media (max-width: 640px) {
   .contact-page .contact-page-group,
   .contact-page .contact-page-secondary,
+  .contact-page .contact-page-actions,
   .contact-modal .contact-form-main,
   .contact-modal .contact-form-side .form-group,
   .contact-modal .contact-submit-wrap {
@@ -15388,6 +15447,15 @@ html[dir="rtl"] #genos-details .about-text li {
 }
 
 @media (min-width: 769px) {
+  .contact-page .contact-page-actions {
+    margin-top: 2px;
+  }
+
+  .contact-page .contact-page-action-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: stretch;
+  }
+
   .contact-modal {
     align-items: flex-start;
     justify-content: center;
