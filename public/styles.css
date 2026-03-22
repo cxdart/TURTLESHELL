@@ -15386,3 +15386,44 @@ html[dir="rtl"] #genos-details .about-text li {
     min-width: 0;
   }
 }
+
+@media (min-width: 769px) {
+  .contact-modal {
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding:
+      calc(var(--nav-height, 76px) + 18px)
+      clamp(20px, 3vw, 32px)
+      clamp(20px, 3vw, 28px);
+  }
+
+  .contact-modal .modal {
+    width: min(840px, calc(100vw - 64px));
+    max-width: min(840px, calc(100vw - 64px));
+    max-height: calc(100svh - var(--nav-height, 76px) - 36px);
+    margin: 0 auto;
+  }
+
+  .contact-modal.contact-modal--service-locked .modal {
+    width: min(760px, calc(100vw - 64px));
+    max-width: min(760px, calc(100vw - 64px));
+  }
+
+  .contact-modal-inner {
+    padding: 30px 32px 28px !important;
+  }
+
+  .contact-modal.contact-modal--service-locked .contact-modal-inner {
+    padding: 26px 28px 24px !important;
+  }
+
+  .contact-form-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(250px, 0.86fr);
+    gap: 18px;
+  }
+
+  .contact-modal.contact-modal--service-locked .contact-message-group .form-input {
+    min-height: 188px;
+  }
+}
