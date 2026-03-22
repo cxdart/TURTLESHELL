@@ -11,7 +11,7 @@ const AUTH_COPY = {
   en: {
     auth_failed: 'Authentication failed. Please try again.',
     generic_error: 'Something went wrong',
-    identifier_required: 'Please enter your email or username.',
+    identifier_required: 'Please enter your email.',
     email_required: 'Please enter your email.',
     username_required: 'Please enter your username.',
     password_required: 'Please enter your password.',
@@ -34,8 +34,8 @@ const AUTH_COPY = {
     login_username_ph: 'turtle123',
     login_phone_optional: 'Phone Number (optional)',
     login_phone_ph: '+1 555 000 0000',
-    login_identifier: 'Email or Username',
-    ph_identifier: 'you@example.com or turtle123',
+    login_identifier: 'Email',
+    ph_identifier: 'you@example.com',
     login_email: 'Email',
     ph_email: 'you@example.com',
     login_password: 'Password',
@@ -60,7 +60,7 @@ const AUTH_COPY = {
   ar: {
     auth_failed: 'فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.',
     generic_error: 'حدث خطأ ما',
-    identifier_required: 'يرجى إدخال البريد الإلكتروني أو اسم المستخدم.',
+    identifier_required: '\u064a\u0631\u062c\u0649 \u0625\u062f\u062e\u0627\u0644 \u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a.',
     email_required: 'يرجى إدخال البريد الإلكتروني.',
     username_required: 'يرجى إدخال اسم المستخدم.',
     password_required: 'يرجى إدخال كلمة المرور.',
@@ -83,8 +83,8 @@ const AUTH_COPY = {
     login_username_ph: 'turtle123',
     login_phone_optional: 'رقم الهاتف (اختياري)',
     login_phone_ph: '+966 50 000 0000',
-    login_identifier: 'البريد الإلكتروني أو اسم المستخدم',
-    ph_identifier: 'you@example.com أو turtle123',
+    login_identifier: '\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a',
+    ph_identifier: 'you@example.com',
     login_email: 'البريد الإلكتروني',
     ph_email: 'you@example.com',
     login_password: 'كلمة المرور',
@@ -109,7 +109,7 @@ const AUTH_COPY = {
   de: {
     auth_failed: 'Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut.',
     generic_error: 'Etwas ist schiefgelaufen',
-    identifier_required: 'Bitte E-Mail oder Benutzernamen eingeben.',
+    identifier_required: 'Bitte E-Mail eingeben.',
     email_required: 'Bitte E-Mail eingeben.',
     username_required: 'Bitte Benutzernamen eingeben.',
     password_required: 'Bitte Passwort eingeben.',
@@ -132,8 +132,8 @@ const AUTH_COPY = {
     login_username_ph: 'turtle123',
     login_phone_optional: 'Telefonnummer (optional)',
     login_phone_ph: '+49 170 0000000',
-    login_identifier: 'E-Mail oder Benutzername',
-    ph_identifier: 'you@example.com oder turtle123',
+    login_identifier: 'E-Mail',
+    ph_identifier: 'you@example.com',
     login_email: 'E-Mail',
     ph_email: 'you@example.com',
     login_password: 'Passwort',
@@ -158,7 +158,7 @@ const AUTH_COPY = {
   ja: {
     auth_failed: '??????????????????????',
     generic_error: '?????????',
-    identifier_required: '?????????????????????????',
+    identifier_required: '\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002',
     email_required: '?????????????????',
     username_required: '???????????????',
     password_required: '???????????????',
@@ -181,8 +181,8 @@ const AUTH_COPY = {
     login_username_ph: 'turtle123',
     login_phone_optional: '????????',
     login_phone_ph: '+81 90 0000 0000',
-    login_identifier: '??????? / ?????',
-    ph_identifier: 'you@example.com ??? turtle123',
+    login_identifier: '\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9',
+    ph_identifier: 'you@example.com',
     login_email: '???????',
     ph_email: 'you@example.com',
     login_password: '?????',
@@ -238,25 +238,6 @@ function LoginPageInner() {
     if (msgParam) setMessage(decodeURIComponent(msgParam))
   }, [searchParams, lang])
 
-  const resolveLoginEmail = async (rawIdentifier: string) => {
-    const trimmed = rawIdentifier.trim()
-    if (trimmed.includes('@')) return trimmed
-
-    const response = await fetch('/api/auth/resolve-login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier: trimmed }),
-    })
-
-    const payload = (await response.json().catch(() => null)) as { email?: string; error?: string } | null
-    if (!response.ok || !payload?.email) {
-      if (response.status === 404) throw new Error(t('username_not_found'))
-      throw new Error(payload?.error || t('generic_error'))
-    }
-
-    return payload.email
-  }
-
   const handleReset = async (e: React.FormEvent) => {
     e.preventDefault()
     if (loading) return
@@ -283,13 +264,13 @@ function LoginPageInner() {
     if (loading) return
     setError('')
     setMessage('')
-    const identifierValue = identifier.trim()
+    const emailValue = identifier.trim()
     const usernameValue = username.trim()
     const passwordValue = password.trim()
     const fullNameValue = fullName.trim()
     const phoneValue = phoneNumber.trim()
-    if (!identifierValue) {
-      setError(mode === 'login' ? t('identifier_required') : t('email_required'))
+    if (!emailValue) {
+      setError(t('email_required'))
       return
     }
     if (mode === 'signup' && !usernameValue) {
@@ -312,7 +293,7 @@ function LoginPageInner() {
         const signupData: Record<string, string> = { full_name: fullNameValue, username: usernameValue }
         if (phoneValue) signupData.phone = phoneValue
         const { error } = await supabase.auth.signUp({
-          email: identifierValue,
+          email: emailValue,
           password: passwordValue,
           options: {
             data: signupData,
@@ -322,8 +303,10 @@ function LoginPageInner() {
         if (error) throw error
         setMessage(t('login_check_email'))
       } else {
-        const loginEmail = await resolveLoginEmail(identifierValue)
-        const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: passwordValue })
+        const { error } = await supabase.auth.signInWithPassword({
+          email: emailValue,
+          password: passwordValue,
+        })
         if (error) throw error
         keepLoading = true
         setMessage(t('login_loading'))
@@ -476,16 +459,16 @@ function LoginPageInner() {
 
             <div className="auth-field">
               <label className="auth-label">
-                {mode === 'login' ? t('login_identifier') : t('login_email')}
+                {t('login_email')}
               </label>
               <input
                 className="auth-input"
-                type={mode === 'login' ? 'text' : 'email'}
+                type="email"
                 value={identifier}
                 onChange={e => setIdentifier(e.target.value)}
-                placeholder={mode === 'login' ? t('ph_identifier') : t('ph_email')}
+                placeholder={t('ph_email')}
                 disabled={loading}
-                autoComplete={mode === 'login' ? 'username' : 'email'}
+                autoComplete="email"
                 required
               />
             </div>

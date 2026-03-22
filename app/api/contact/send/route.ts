@@ -8,16 +8,29 @@ const CONTACT_EMAIL = process.env.CONTACT_EMAIL || process.env.GMAIL_USER || 'he
 const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || CONTACT_EMAIL
 const SENDMAIL_PATH = process.env.SENDMAIL_PATH || '/usr/sbin/sendmail'
 
+function escapeHtml(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;')
+}
+
 function buildHtml(data: Record<string, string>) {
   const rows = Object.entries(data)
     .map(
       ([k, v]) =>
-        `<tr><td style="padding:6px 12px;font-weight:600;color:#94a3b8;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:6px 12px;color:#e2e8f0;white-space:pre-wrap">${v || '-'}</td></tr>`
+        `<tr><td style="padding:6px 12px;font-weight:600;color:#94a3b8;white-space:nowrap;vertical-align:top">${escapeHtml(
+          k
+        )}</td><td style="padding:6px 12px;color:#e2e8f0;white-space:pre-wrap">${escapeHtml(
+          v || '-'
+        )}</td></tr>`
     )
     .join('')
   return `
     <div style="font-family:Inter,sans-serif;background:#0a0a0f;color:#e2e8f0;padding:32px;border-radius:12px;max-width:620px">
-      <h2 style="color:#93c5fd;margin:0 0 20px">${data['Type'] || 'New Request'}</h2>
+      <h2 style="color:#93c5fd;margin:0 0 20px">${escapeHtml(data['Type'] || 'New Request')}</h2>
       <table style="width:100%;border-collapse:collapse;background:#111827;border-radius:8px;overflow:hidden">
         <tbody>${rows}</tbody>
       </table>

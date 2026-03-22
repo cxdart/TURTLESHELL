@@ -25,12 +25,14 @@ type MeliodasSettings = {
   reply_message: string
   check_interval: number
   passcode: string
+  passcodeConfigured: boolean
   allowed_accounts: string
 }
 
 type MeliodasCredentials = {
   username: string
   password: string
+  configured: boolean
 }
 
 type FlashState = {
@@ -43,12 +45,14 @@ const DEFAULT_SETTINGS: MeliodasSettings = {
   reply_message: '',
   check_interval: 15,
   passcode: '',
+  passcodeConfigured: false,
   allowed_accounts: '',
 }
 
 const DEFAULT_CREDENTIALS: MeliodasCredentials = {
   username: '',
   password: '',
+  configured: false,
 }
 
 function sameSettings(a: MeliodasSettings, b: MeliodasSettings) {
@@ -57,12 +61,13 @@ function sameSettings(a: MeliodasSettings, b: MeliodasSettings) {
     a.reply_message === b.reply_message &&
     a.check_interval === b.check_interval &&
     a.passcode === b.passcode &&
+    a.passcodeConfigured === b.passcodeConfigured &&
     a.allowed_accounts === b.allowed_accounts
   )
 }
 
 function sameCredentials(a: MeliodasCredentials, b: MeliodasCredentials) {
-  return a.username === b.username && a.password === b.password
+  return a.username === b.username && a.password === b.password && a.configured === b.configured
 }
 
 const COPY = {
@@ -201,8 +206,80 @@ const COPY = {
   },
 } as const
 
-async function requestMeliodas<T>(endpoint: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`/api/meliodas/${endpoint}`, {
+type SupportedLang = 'en' | 'ar' | 'de' | 'ja'
+
+const SECURED_FIELD_COPY: Record<SupportedLang, { configured: string; notSet: string }> = {
+  en: {
+    configured: 'Configured on server',
+    notSet: 'Not set',
+  },
+  ar: {
+    configured: '\u062a\u0645 \u062d\u0641\u0638\u0647 \u0639\u0644\u0649 \u0627\u0644\u062e\u0627\u062f\u0645',
+    notSet: '\u063a\u064a\u0631 \u0645\u0636\u0628\u0648\u0637',
+  },
+  de: {
+    configured: 'Auf dem Server gespeichert',
+    notSet: 'Nicht gesetzt',
+  },
+  ja: {
+    configured: '\u30b5\u30fc\u30d0\u30fc\u306b\u8a2d\u5b9a\u6e08\u307f',
+    notSet: '\u672a\u8a2d\u5b9a',
+  },
+}
+
+type SecuredFieldCopy = (typeof SECURED_FIELD_COPY)['en']
+
+type MeliodasSettingsResponse = {
+  keyword?: string
+  reply_message?: string
+  check_interval?: number
+  allowed_accounts?: string
+  passcodeConfigured?: boolean
+}
+
+type MeliodasCredentialsResponse = {
+  configured?: boolean
+}
+
+function normalizeSettings(next?: MeliodasSettingsResponse): MeliodasSettings {
+  return {
+    keyword: next?.keyword || '',
+    reply_message: next?.reply_message || '',
+    check_interval: next?.check_interval || 15,
+    passcode: '',
+    passcodeConfigured: Boolean(next?.passcodeConfigured),
+    allowed_accounts: next?.allowed_accounts || '',
+  }
+}
+
+function savedSettingsFromDraft(settings: MeliodasSettings): MeliodasSettings {
+  return {
+    ...settings,
+    passcode: '',
+    passcodeConfigured: settings.passcode ? true : settings.passcodeConfigured,
+  }
+}
+
+function savedCredentialsState(configured: boolean): MeliodasCredentials {
+  return {
+    username: '',
+    password: '',
+    configured,
+  }
+}
+
+function settingsPayload(settings: MeliodasSettings) {
+  return {
+    keyword: settings.keyword,
+    reply_message: settings.reply_message,
+    check_interval: settings.check_interval,
+    passcode: settings.passcode,
+    allowed_accounts: settings.allowed_accounts,
+  }
+}
+
+async function requestMeliodas<T>(botSlug: string, endpoint: string, init?: RequestInit): Promise<T> {
+  const response = await fetch(`/api/meliodas/${encodeURIComponent(botSlug)}/${endpoint}`, {
     ...init,
     cache: 'no-store',
   })
@@ -229,8 +306,6 @@ function formatUptime(seconds: number | null | undefined) {
 
 type CopyEntry = (typeof COPY)['en']
 
-type SupportedLang = 'en' | 'ar' | 'de' | 'ja'
-
 const CHAT_PASSWORD_COPY: Record<SupportedLang, {
   settingsBody: string
   label: string
@@ -244,21 +319,21 @@ const CHAT_PASSWORD_COPY: Record<SupportedLang, {
   },
   ar: {
     settingsBody:
-      'اضبط الكلمة المفتاحية ورسالة الرد وفاصل الفحص وكلمة مرور الدردشة المستخدمة مع الروبوت.',
-    label: 'كلمة مرور الدردشة',
-    placeholder: 'كلمة مرور دردشة اختيارية',
+      '\u0627\u0636\u0628\u0637 \u0627\u0644\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0641\u062a\u0627\u062d\u064a\u0629 \u0648\u0631\u0633\u0627\u0644\u0629 \u0627\u0644\u0631\u062f \u0648\u0641\u0627\u0635\u0644 \u0627\u0644\u0641\u062d\u0635 \u0648\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u0627\u0644\u062f\u0631\u062f\u0634\u0629 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0645\u0639 \u0627\u0644\u0631\u0648\u0628\u0648\u062a.',
+    label: '\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u0627\u0644\u062f\u0631\u062f\u0634\u0629',
+    placeholder: '\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062f\u0631\u062f\u0634\u0629 \u0627\u062e\u062a\u064a\u0627\u0631\u064a\u0629',
   },
   de: {
     settingsBody:
-      'Passe Keyword, Antwortnachricht, Prüfintervall und Chat-Passwort an, die vom ursprünglichen Bot-Prozess verwendet werden.',
+      'Passe Keyword, Antwortnachricht, Pr?fintervall und Chat-Passwort an, die vom urspr?nglichen Bot-Prozess verwendet werden.',
     label: 'Chat-Passwort',
     placeholder: 'Optionales Chat-Passwort',
   },
   ja: {
     settingsBody:
-      'キーワード、返信メッセージ、確認間隔、そして元のボットプロセスで使うチャットパスワードを調整します。',
-    label: 'チャットパスワード',
-    placeholder: '任意のチャットパスワード',
+      '\u30ad\u30fc\u30ef\u30fc\u30c9\u3001\u8fd4\u4fe1\u30e1\u30c3\u30bb\u30fc\u30b8\u3001\u78ba\u8a8d\u9593\u9694\u3001\u305d\u3057\u3066\u5143\u306e\u30dc\u30c3\u30c8\u30d7\u30ed\u30bb\u30b9\u3067\u4f7f\u3046\u30c1\u30e3\u30c3\u30c8\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u8abf\u6574\u3057\u307e\u3059\u3002',
+    label: '\u30c1\u30e3\u30c3\u30c8\u30d1\u30b9\u30ef\u30fc\u30c9',
+    placeholder: '\u4efb\u610f\u306e\u30c1\u30e3\u30c3\u30c8\u30d1\u30b9\u30ef\u30fc\u30c9',
   },
 }
 
@@ -471,6 +546,7 @@ function AllowedAccountsCard({
 
 function GoogleAccountCard({
   copy,
+  securedFieldCopy,
   credentials,
   onChange,
   onSave,
@@ -478,6 +554,7 @@ function GoogleAccountCard({
   isDirty,
 }: {
   copy: CopyEntry
+  securedFieldCopy: SecuredFieldCopy
   credentials: MeliodasCredentials
   onChange: (next: MeliodasCredentials) => void
   onSave: () => void
@@ -490,6 +567,9 @@ function GoogleAccountCard({
         <div className={styles.cardLabel}>{copy.credentialsTitle}</div>
         <h2 className={styles.cardTitle}>{copy.credentialsTitle}</h2>
         <p className={styles.cardText}>{copy.credentialsBody}</p>
+        <p className={`${styles.stateNote} ${!credentials.configured ? styles.stateNoteMuted : ''}`}>
+          {credentials.configured ? securedFieldCopy.configured : securedFieldCopy.notSet}
+        </p>
       </div>
 
       <div className={styles.formStack}>
@@ -540,6 +620,7 @@ function GoogleAccountCard({
 
 function SettingsCard({
   copy,
+  securedFieldCopy,
   settings,
   onChange,
   onSave,
@@ -547,6 +628,7 @@ function SettingsCard({
   isDirty,
 }: {
   copy: CopyEntry
+  securedFieldCopy: SecuredFieldCopy
   settings: MeliodasSettings
   onChange: (next: MeliodasSettings) => void
   onSave: () => void
@@ -559,6 +641,9 @@ function SettingsCard({
         <div className={styles.cardLabel}>{copy.settingsTitle}</div>
         <h2 className={styles.cardTitle}>{copy.settingsTitle}</h2>
         <p className={styles.cardText}>{copy.settingsBody}</p>
+        <p className={`${styles.stateNote} ${!settings.passcodeConfigured ? styles.stateNoteMuted : ''}`}>
+          {settings.passcodeConfigured ? securedFieldCopy.configured : securedFieldCopy.notSet}
+        </p>
       </div>
 
       <div className={styles.formGrid}>
@@ -646,6 +731,7 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
   const normalizedLang = normalizeLang(lang)
   const baseCopy = COPY[normalizedLang as keyof typeof COPY] ?? COPY.en
   const chatPasswordCopy = CHAT_PASSWORD_COPY[normalizedLang]
+  const securedFieldCopy = SECURED_FIELD_COPY[normalizedLang]
   const copy = {
     ...baseCopy,
     settingsBody: chatPasswordCopy.settingsBody,
@@ -668,6 +754,7 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
   const [savingState, setSavingState] = useState<'accounts' | 'credentials' | 'settings' | null>(null)
   const [controlState, setControlState] = useState<'idle' | 'starting' | 'stopping'>('idle')
   const flashTimerRef = useRef<number | null>(null)
+  const botSlug = bot.bot_slug
 
   const showFlash = (type: FlashState['type'], message: string) => {
     if (flashTimerRef.current) {
@@ -694,10 +781,10 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     const boot = async () => {
       try {
         const [statusData, credentialsData, settingsData, logsData] = await Promise.allSettled([
-          requestMeliodas<MeliodasStatus>('status'),
-          requestMeliodas<{ username?: string; password?: string }>('credentials'),
-          requestMeliodas<Partial<MeliodasSettings>>('settings'),
-          requestMeliodas<{ lines?: string[] }>('logs'),
+          requestMeliodas<MeliodasStatus>(botSlug, 'status'),
+          requestMeliodas<MeliodasCredentialsResponse>(botSlug, 'credentials'),
+          requestMeliodas<MeliodasSettingsResponse>(botSlug, 'settings'),
+          requestMeliodas<{ lines?: string[] }>(botSlug, 'logs'),
         ])
 
         if (cancelled) return
@@ -707,22 +794,13 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
         }
 
         if (credentialsData.status === 'fulfilled') {
-          const nextCredentials = {
-            username: credentialsData.value.username || '',
-            password: credentialsData.value.password || '',
-          }
+          const nextCredentials = savedCredentialsState(Boolean(credentialsData.value.configured))
           setCredentials(nextCredentials)
           setSavedCredentials(nextCredentials)
         }
 
         if (settingsData.status === 'fulfilled') {
-          const nextSettings = {
-            keyword: settingsData.value.keyword || '',
-            reply_message: settingsData.value.reply_message || '',
-            check_interval: settingsData.value.check_interval || 15,
-            passcode: settingsData.value.passcode || '',
-            allowed_accounts: settingsData.value.allowed_accounts || '',
-          }
+          const nextSettings = normalizeSettings(settingsData.value)
           setSettings(nextSettings)
           setSavedSettings(nextSettings)
         }
@@ -752,12 +830,12 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     return () => {
       cancelled = true
     }
-  }, [copy.backendOffline])
+  }, [botSlug, copy.backendOffline])
 
   useEffect(() => {
     const statusTimer = window.setInterval(async () => {
       try {
-        const nextStatus = await requestMeliodas<MeliodasStatus>('status')
+        const nextStatus = await requestMeliodas<MeliodasStatus>(botSlug, 'status')
         setStatus(nextStatus)
       } catch {
         setStatus((current) => ({ ...current, running: false }))
@@ -765,12 +843,12 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     }, 4000)
 
     return () => window.clearInterval(statusTimer)
-  }, [])
+  }, [botSlug])
 
   useEffect(() => {
     const logTimer = window.setInterval(async () => {
       try {
-        const nextLogs = await requestMeliodas<{ lines?: string[] }>('logs')
+        const nextLogs = await requestMeliodas<{ lines?: string[] }>(botSlug, 'logs')
         const nextLines = nextLogs.lines || []
         setLogs(prev => {
           const nowTs = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'})
@@ -782,21 +860,22 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     }, 3000)
 
     return () => window.clearInterval(logTimer)
-  }, [])
+  }, [botSlug])
 
   const saveAccounts = async () => {
     setSavingState('accounts')
 
     try {
-      await requestMeliodas('settings', {
+      await requestMeliodas(botSlug, 'settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Passcode': settings.passcode,
         },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(settingsPayload(settings)),
       })
-      setSavedSettings(settings)
+      const nextSettings = savedSettingsFromDraft(settings)
+      setSettings(nextSettings)
+      setSavedSettings(nextSettings)
       showFlash('success', copy.accountsSaved)
     } catch (error) {
       showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
@@ -809,14 +888,19 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     setSavingState('credentials')
 
     try {
-      await requestMeliodas('credentials', {
+      await requestMeliodas(botSlug, 'credentials', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({
+          username: credentials.username,
+          password: credentials.password,
+        }),
       })
-      setSavedCredentials(credentials)
+      const nextCredentials = savedCredentialsState(true)
+      setCredentials(nextCredentials)
+      setSavedCredentials(nextCredentials)
       showFlash('success', copy.accountSaved)
     } catch (error) {
       showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
@@ -829,15 +913,16 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     setSavingState('settings')
 
     try {
-      await requestMeliodas('settings', {
+      await requestMeliodas(botSlug, 'settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Passcode': settings.passcode,
         },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(settingsPayload(settings)),
       })
-      setSavedSettings(settings)
+      const nextSettings = savedSettingsFromDraft(settings)
+      setSettings(nextSettings)
+      setSavedSettings(nextSettings)
       showFlash('success', copy.settingsSaved)
     } catch (error) {
       showFlash('error', error instanceof Error ? error.message : copy.requestFailed)
@@ -851,16 +936,13 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     setLogs([]) // Clear log box immediately on start
 
     try {
-      await requestMeliodas('start', {
+      await requestMeliodas(botSlug, 'start', {
         method: 'POST',
-        headers: {
-          'X-Passcode': settings.passcode,
-        },
       })
 
-      const nextStatus = await requestMeliodas<MeliodasStatus>('status')
+      const nextStatus = await requestMeliodas<MeliodasStatus>(botSlug, 'status')
       setStatus(nextStatus)
-        const nextLogs = await requestMeliodas<{ lines?: string[] }>('logs')
+        const nextLogs = await requestMeliodas<{ lines?: string[] }>(botSlug, 'logs')
         const nextLines = nextLogs.lines || []
         setLogs(prev => {
           const nowTs = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'})
@@ -878,14 +960,11 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
     setControlState('stopping')
 
     try {
-      await requestMeliodas('stop', {
+      await requestMeliodas(botSlug, 'stop', {
         method: 'POST',
-        headers: {
-          'X-Passcode': settings.passcode,
-        },
       })
 
-      const nextStatus = await requestMeliodas<MeliodasStatus>('status')
+      const nextStatus = await requestMeliodas<MeliodasStatus>(botSlug, 'status')
       setStatus(nextStatus)
       showFlash('success', copy.stopSuccess)
     } catch (error) {
@@ -959,6 +1038,7 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
 
                 <GoogleAccountCard
                   copy={copy}
+                  securedFieldCopy={securedFieldCopy}
                   credentials={credentials}
                   onChange={setCredentials}
                   onSave={saveCredentials}
@@ -971,6 +1051,7 @@ export default function MeliodasBotPageClient({ bot }: { bot: Bot }) {
             <div className={styles.settingsArea}>
               <SettingsCard
                 copy={copy}
+                securedFieldCopy={securedFieldCopy}
                 settings={settings}
                 onChange={setSettings}
                 onSave={saveSettings}

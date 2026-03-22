@@ -201,6 +201,17 @@
   font-size: 0.92rem;
 }
 
+.stateNote {
+  margin: -4px 0 0;
+  color: rgba(186, 225, 255, 0.92);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.stateNoteMuted {
+  color: rgba(203, 212, 227, 0.68);
+}
+
 .statGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -549,6 +560,14 @@
 :global([data-theme='light']) .statValue,
 :global([data-theme='light']) .cardTitle {
   color: rgba(15, 24, 44, 0.98);
+}
+
+:global([data-theme='light']) .stateNote {
+  color: rgba(16, 78, 172, 0.9);
+}
+
+:global([data-theme='light']) .stateNoteMuted {
+  color: rgba(70, 82, 104, 0.74);
 }
 
 :global([data-theme='light']) .logBox {
