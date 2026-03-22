@@ -10590,6 +10590,15 @@ html[dir="rtl"] #genos-details .about-text li {
     margin-right: auto;
   }
 
+  @media (min-width: 769px) {
+    .hero h1[data-i18n="hero_title"] {
+      max-width: none;
+      white-space: nowrap;
+      font-size: clamp(38px, 4.9vw, 68px);
+      letter-spacing: -1.6px;
+    }
+  }
+
   .hero p {
     max-width: 35ch;
     margin: 0 auto 30px;

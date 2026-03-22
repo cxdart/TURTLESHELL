@@ -26,12 +26,8 @@ export default async function HomePage() {
             <img className="hero-logo-img" src="/TURTLESHELL-LOGO.png" alt="TURTLESHELL Logo" />
           </div>
           <div className="hero-text-reveal">
-            <h1 data-i18n="hero_title" data-hero-source={'Build.<br>Automate.<br>Scale.'}>
-              Build.
-              <br />
-              Automate.
-              <br />
-              Scale.
+            <h1 data-i18n="hero_title" data-hero-source={'Build. Automate. Scale.'}>
+              Build. Automate. Scale.
             </h1>
             <p data-i18n="hero_desc">
               Custom automation engines and modern web systems, engineered to run 24/7, scale cleanly, and stay secure.
