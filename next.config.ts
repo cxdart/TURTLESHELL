@@ -1,8 +1,14 @@
 import type { NextConfig } from 'next'
 
+const projectRoot = process.cwd()
+
 const nextConfig: NextConfig = {
   compress: true,
   devIndicators: false,
+  outputFileTracingRoot: projectRoot,
+  turbopack: {
+    root: projectRoot,
+  },
 
   async headers() {
     return [
